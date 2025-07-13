@@ -1,7 +1,67 @@
-// Simple local storage based authentication (for demo purposes)
-// In production, this should connect to a real backend
-
+// Global variables
+let currentUser = null;
 let isFullscreen = false;
+let simulationStartTime = null;
+let auth;
+let db;
+
+// Initialize Firebase when page loads
+window.onload = function() {
+    // Check if Firebase is available
+    if (typeof firebase === 'undefined') {
+        console.error('Firebase not loaded, falling back to localStorage');
+        initializeLocalStorageAuth();
+        return;
+    }
+    
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyDdsMwMVFSlsTXYAk3NONBD2BOb9SeXkuM",
+        authDomain: "robospace-mvp.firebaseapp.com",
+        projectId: "robospace-mvp",
+        storageBucket: "robospace-mvp.firebasestorage.app",
+        messagingSenderId: "304361370352",
+        appId: "1:304361370352:web:044510ea0df63a0bda8835",
+        measurementId: "G-H4Z87KHRM4"
+    };
+
+    try {
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        auth = firebase.auth();
+        db = firebase.firestore();
+        
+        console.log('Firebase initialized successfully');
+        
+        // Auth state observer
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                currentUser = user;
+                console.log('User signed in:', user.email);
+                loadUserData();
+                showDashboard();
+            } else {
+                currentUser = null;
+                console.log('User signed out');
+                showHome();
+            }
+        });
+        
+    } catch (error) {
+        console.error('Firebase initialization error:', error);
+        initializeLocalStorageAuth();
+    }
+};
+
+// Fallback to localStorage if Firebase fails
+function initializeLocalStorageAuth() {
+    initializeTestUser();
+    const user = localStorage.getItem('roboSpaceUser');
+    if (user) {
+        currentUser = JSON.parse(user);
+        showDashboard();
+    }
+}
 
 // Initialize with test user if no users exist
 function initializeTestUser() {
@@ -22,253 +82,9 @@ function initializeTestUser() {
     }
 }
 
-// Check if user is already logged in
-window.onload = function() {
-    initializeTestUser();
-    const user = localStorage.getItem('roboSpaceUser');
-    if (user) {
-        currentUser = JSON.parse(user);
-        showDashboard();
-    }
-};
-
-function showHome() {
-    document.getElementById('homePage').style.display = 'block';
-    document.getElementById('dashboard').style.display = 'none';
-    closeAllModals();
-}
-
-function showLogin() {
-    closeAllModals();
-    document.getElementById('loginModal').style.display = 'flex';
-}
-
-function showSignup() {
-    closeAllModals();
-    document.getElementById('signupModal').style.display = 'flex';
-}
-
-function closeModal(modalId) {
-    document.getElementById(modalId).style.display = 'none';
-    clearErrors();
-}
-
-function closeAllModals() {
-    document.getElementById('loginModal').style.display = 'none';
-    document.getElementById('signupModal').style.display = 'none';
-    clearErrors();
-}
-
-function clearErrors() {
-    document.getElementById('loginError').style.display = 'none';
-    document.getElementById('signupError').style.display = 'none';
-}
-
-function showError(elementId, message) {
-    const errorElement = document.getElementById(elementId);
-    errorElement.textContent = message;
-    errorElement.style.display = 'block';
-}
-
-function handleLogin(event) {
-    event.preventDefault();
-    
-    const email = document.getElementById('loginEmail').value;
-    const password = document.getElementById('loginPassword').value;
-    
-    // Simple validation (in production, this would call a backend API)
-    const users = JSON.parse(localStorage.getItem('roboSpaceUsers') || '[]');
-    const user = users.find(u => u.email === email && u.password === password);
-    
-    if (user) {
-        currentUser = user;
-        localStorage.setItem('roboSpaceUser', JSON.stringify(user));
-        showDashboard();
-    } else {
-        showError('loginError', 'Invalid email or password');
-    }
-}
-
-function handleSignup(event) {
-    event.preventDefault();
-    
-    const name = document.getElementById('signupName').value;
-    const email = document.getElementById('signupEmail').value;
-    const password = document.getElementById('signupPassword').value;
-    
-    // Check if user already exists
-    const users = JSON.parse(localStorage.getItem('roboSpaceUsers') || '[]');
-    if (users.find(u => u.email === email)) {
-        showError('signupError', 'Email already registered');
-        return;
-    }
-    
-    // Create new user
-    const newUser = { name, email, password };
-    users.push(newUser);
-    localStorage.setItem('roboSpaceUsers', JSON.stringify(users));
-    
-    // Auto login
-    currentUser = newUser;
-    localStorage.setItem('roboSpaceUser', JSON.stringify(newUser));
-    showDashboard();
-}
-
-function showDashboard() {
-    closeAllModals();
-    document.getElementById('homePage').style.display = 'none';
-    document.getElementById('dashboard').style.display = 'block';
-    
-    // Update user info
-    document.getElementById('userEmail').textContent = currentUser.email;
-    document.getElementById('userAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
-    
-    // Load the demo
-    loadDemo();
-}
-
-function loadDemo() {
-    const iframe = document.getElementById('demoFrame');
-    const loading = document.getElementById('demoLoading');
-    
-    // Show loading spinner
-    loading.style.display = 'block';
-    iframe.style.display = 'none';
-    
-    // Set iframe source
-    iframe.src = 'https://www.keivalya.com/robospace-demo/';
-    
-    // Hide loading spinner when iframe loads
-    iframe.onload = function() {
-        loading.style.display = 'none';
-        iframe.style.display = 'block';
-    };
-}
-
-function toggleFullscreen() {
-    const demoContainer = document.getElementById('demoContainer');
-    const fullscreenBtn = document.getElementById('fullscreenBtn');
-    
-    if (!isFullscreen) {
-        // Enter fullscreen
-        demoContainer.classList.add('fullscreen');
-        fullscreenBtn.innerHTML = '🔍 Exit Fullscreen';
-        fullscreenBtn.style.position = 'absolute';
-        fullscreenBtn.style.top = '20px';
-        fullscreenBtn.style.right = '20px';
-        isFullscreen = true;
-        
-        // Hide scroll bars
-        document.body.style.overflow = 'hidden';
-        
-        // Try to use native fullscreen API if available
-        if (demoContainer.requestFullscreen) {
-            demoContainer.requestFullscreen().catch(err => {
-                console.log('Fullscreen API not supported, using CSS fullscreen');
-            });
-        } else if (demoContainer.webkitRequestFullscreen) {
-            demoContainer.webkitRequestFullscreen();
-        } else if (demoContainer.msRequestFullscreen) {
-            demoContainer.msRequestFullscreen();
-        }
-    } else {
-        // Exit fullscreen
-        demoContainer.classList.remove('fullscreen');
-        fullscreenBtn.innerHTML = '🔍 Fullscreen';
-        fullscreenBtn.style.position = 'absolute';
-        fullscreenBtn.style.top = '10px';
-        fullscreenBtn.style.right = '10px';
-        isFullscreen = false;
-        
-        // Restore scroll bars
-        document.body.style.overflow = 'auto';
-        
-        // Exit native fullscreen
-        if (document.exitFullscreen) {
-            document.exitFullscreen().catch(err => {
-                console.log('Exit fullscreen failed');
-            });
-        } else if (document.webkitExitFullscreen) {
-            document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) {
-            document.msExitFullscreen();
-        }
-    }
-}
-
-// Handle ESC key to exit fullscreen
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape' && isFullscreen) {
-        toggleFullscreen();
-    }
-});
-
-// Handle fullscreen change events
-document.addEventListener('fullscreenchange', function() {
-    if (!document.fullscreenElement && isFullscreen) {
-        // User exited fullscreen using F11 or ESC
-        toggleFullscreen();
-    }
-});
-
-function logout() {
-    localStorage.removeItem('roboSpaceUser');
-    currentUser = null;
-    
-    // Clear iframe to stop simulation
-    document.getElementById('demoFrame').src = '';
-    
-    // Exit fullscreen if active
-    if (isFullscreen) {
-        toggleFullscreen();
-    }
-    
-    showHome();
-}
-
-// Close modals when clicking outside
-window.onclick = function(event) {
-    if (event.target.classList.contains('modal')) {
-        event.target.style.display = 'none';
-        clearErrors();
-    }
-};
-
-const firebaseConfig = {
-    apiKey: "AIzaSyDdsMwMVFSlsTXYAk3NONBD2BOb9SeXkuM",
-    authDomain: "robospace-mvp.firebaseapp.com",
-    projectId: "robospace-mvp",
-    storageBucket: "robospace-mvp.firebasestorage.app",
-    messagingSenderId: "304361370352",
-    appId: "1:304361370352:web:044510ea0df63a0bda8835",
-    measurementId: "G-H4Z87KHRM4"
-  };
-
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
-
-// User management
-let currentUser = null;
-
-// Auth state observer
-auth.onAuthStateChanged((user) => {
-    if (user) {
-        currentUser = user;
-        console.log('User signed in:', user.email);
-        loadUserData();
-        showDashboard();
-    } else {
-        currentUser = null;
-        console.log('User signed out');
-        showHome();
-    }
-});
-
 // Load user data from Firestore
 async function loadUserData() {
-    if (!currentUser) return;
+    if (!currentUser || !db) return;
     
     try {
         const userDoc = await db.collection('users').doc(currentUser.uid).get();
@@ -286,7 +102,7 @@ async function loadUserData() {
 
 // Save user data to Firestore
 async function saveUserData(userData) {
-    if (!currentUser) return;
+    if (!currentUser || !db) return;
     
     try {
         await db.collection('users').doc(currentUser.uid).set({
@@ -307,6 +123,24 @@ async function handleSignup(event) {
     const name = document.getElementById('signupName').value;
     const email = document.getElementById('signupEmail').value;
     const password = document.getElementById('signupPassword').value;
+    
+    if (!auth) {
+        // Fallback to localStorage
+        const users = JSON.parse(localStorage.getItem('roboSpaceUsers') || '[]');
+        if (users.find(u => u.email === email)) {
+            showError('signupError', 'Email already registered');
+            return;
+        }
+        
+        const newUser = { name, email, password };
+        users.push(newUser);
+        localStorage.setItem('roboSpaceUsers', JSON.stringify(users));
+        
+        currentUser = newUser;
+        localStorage.setItem('roboSpaceUser', JSON.stringify(newUser));
+        showDashboard();
+        return;
+    }
     
     try {
         // Create user with Firebase Auth
@@ -343,6 +177,21 @@ async function handleLogin(event) {
     const email = document.getElementById('loginEmail').value;
     const password = document.getElementById('loginPassword').value;
     
+    if (!auth) {
+        // Fallback to localStorage
+        const users = JSON.parse(localStorage.getItem('roboSpaceUsers') || '[]');
+        const user = users.find(u => u.email === email && u.password === password);
+        
+        if (user) {
+            currentUser = user;
+            localStorage.setItem('roboSpaceUser', JSON.stringify(user));
+            showDashboard();
+        } else {
+            showError('loginError', 'Invalid email or password');
+        }
+        return;
+    }
+    
     try {
         await auth.signInWithEmailAndPassword(email, password);
         // Dashboard will be shown automatically by auth state observer
@@ -355,24 +204,31 @@ async function handleLogin(event) {
 
 // Updated logout function
 async function logout() {
-    try {
-        await auth.signOut();
-        // Clear iframe
-        document.getElementById('demoFrame').src = '';
-        // Exit fullscreen if active
-        if (isFullscreen) {
-            toggleFullscreen();
+    if (auth) {
+        try {
+            await auth.signOut();
+        } catch (error) {
+            console.error('Logout error:', error);
         }
-        // Home page will be shown automatically by auth state observer
-        
-    } catch (error) {
-        console.error('Logout error:', error);
+    } else {
+        // localStorage fallback
+        localStorage.removeItem('roboSpaceUser');
+        currentUser = null;
+        showHome();
+    }
+    
+    // Clear iframe
+    document.getElementById('demoFrame').src = '';
+    
+    // Exit fullscreen if active
+    if (isFullscreen) {
+        toggleFullscreen();
     }
 }
 
 // Usage tracking
 async function trackSimulationUsage(duration) {
-    if (!currentUser) return;
+    if (!currentUser || !db) return;
     
     try {
         const userRef = db.collection('users').doc(currentUser.uid);
@@ -388,7 +244,7 @@ async function trackSimulationUsage(duration) {
 
 // Plan management
 async function updateUserPlan(planType) {
-    if (!currentUser) return;
+    if (!currentUser || !db) return;
     
     try {
         await db.collection('users').doc(currentUser.uid).update({
@@ -423,7 +279,7 @@ function getErrorMessage(errorCode) {
 async function selectPlan(planType) {
     localStorage.setItem('selectedPlan', planType);
     
-    if (currentUser) {
+    if (currentUser && db) {
         await updateUserPlan(planType);
     }
     
@@ -435,9 +291,6 @@ async function selectPlan(planType) {
         showSignup();
     }
 }
-
-// Simulation session tracking
-let simulationStartTime = null;
 
 function loadDemo() {
     const iframe = document.getElementById('demoFrame');
@@ -487,7 +340,7 @@ function showDashboard() {
     // Update user info if we have currentUser
     if (currentUser) {
         document.getElementById('userEmail').textContent = currentUser.email;
-        const displayName = currentUser.displayName || currentUser.email;
+        const displayName = currentUser.displayName || currentUser.name || currentUser.email;
         document.getElementById('userAvatar').textContent = displayName.charAt(0).toUpperCase();
     }
     
@@ -496,18 +349,93 @@ function showDashboard() {
     loadDemo();
 }
 
-function showDashboardFallback() {
+function showHome() {
+    document.getElementById('homePage').style.display = 'block';
+    document.getElementById('dashboard').style.display = 'none';
     closeAllModals();
-    document.getElementById('homePage').style.display = 'none';
-    document.getElementById('dashboard').style.display = 'block';
+}
+
+function showLogin() {
+    closeAllModals();
+    document.getElementById('loginModal').style.display = 'flex';
+}
+
+function showSignup() {
+    closeAllModals();
+    document.getElementById('signupModal').style.display = 'flex';
+}
+
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+    clearErrors();
+}
+
+function closeAllModals() {
+    document.getElementById('loginModal').style.display = 'none';
+    document.getElementById('signupModal').style.display = 'none';
+    clearErrors();
+}
+
+function clearErrors() {
+    document.getElementById('loginError').style.display = 'none';
+    document.getElementById('signupError').style.display = 'none';
+}
+
+function showError(elementId, message) {
+    const errorElement = document.getElementById(elementId);
+    errorElement.textContent = message;
+    errorElement.style.display = 'block';
+}
+
+function toggleFullscreen() {
+    const demoContainer = document.getElementById('demoContainer');
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
     
-    // Set fallback user info
-    document.getElementById('userEmail').textContent = 'keivalyapandya@gmail.com';
-    document.getElementById('userAvatar').textContent = 'K';
-    
-    // Load simulation
-    console.log('Dashboard shown (fallback), loading simulation...');
-    loadDemo();
+    if (!isFullscreen) {
+        // Enter fullscreen
+        demoContainer.classList.add('fullscreen');
+        fullscreenBtn.innerHTML = '🔍 Exit Fullscreen';
+        fullscreenBtn.style.position = 'absolute';
+        fullscreenBtn.style.top = '20px';
+        fullscreenBtn.style.left = '20px';
+        isFullscreen = true;
+        
+        // Hide scroll bars
+        document.body.style.overflow = 'hidden';
+        
+        // Try to use native fullscreen API if available
+        if (demoContainer.requestFullscreen) {
+            demoContainer.requestFullscreen().catch(err => {
+                console.log('Fullscreen API not supported, using CSS fullscreen');
+            });
+        } else if (demoContainer.webkitRequestFullscreen) {
+            demoContainer.webkitRequestFullscreen();
+        } else if (demoContainer.msRequestFullscreen) {
+            demoContainer.msRequestFullscreen();
+        }
+    } else {
+        // Exit fullscreen
+        demoContainer.classList.remove('fullscreen');
+        fullscreenBtn.innerHTML = '🔍 Fullscreen';
+        fullscreenBtn.style.position = 'absolute';
+        fullscreenBtn.style.top = '10px';
+        fullscreenBtn.style.right = '10px';
+        isFullscreen = false;
+        
+        // Restore scroll bars
+        document.body.style.overflow = 'auto';
+        
+        // Exit native fullscreen
+        if (document.exitFullscreen) {
+            document.exitFullscreen().catch(err => {
+                console.log('Exit fullscreen failed');
+            });
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    }
 }
 
 // Debug function to test simulation loading
@@ -572,6 +500,21 @@ function loadAlternativeDemo() {
     tryNextUrl();
 }
 
+// Handle ESC key to exit fullscreen
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape' && isFullscreen) {
+        toggleFullscreen();
+    }
+});
+
+// Handle fullscreen change events
+document.addEventListener('fullscreenchange', function() {
+    if (!document.fullscreenElement && isFullscreen) {
+        // User exited fullscreen using F11 or ESC
+        toggleFullscreen();
+    }
+});
+
 // Track simulation end
 window.addEventListener('beforeunload', function() {
     if (simulationStartTime && currentUser) {
@@ -580,9 +523,10 @@ window.addEventListener('beforeunload', function() {
     }
 });
 
-// Initialize app
-window.onload = function() {
-    // Remove localStorage-based initialization
-    // Firebase auth state observer will handle user state
-    console.log('RoboSpace initialized with Firebase');
+// Close modals when clicking outside
+window.onclick = function(event) {
+    if (event.target.classList.contains('modal')) {
+        event.target.style.display = 'none';
+        clearErrors();
+    }
 };
