@@ -1,394 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RoboSpace - Advanced Robot Simulation Platform</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-color: #2563eb;
-            --primary-dark: #1d4ed8;
-            --secondary-color: #10b981;
-            --dark-bg: #0f172a;
-            --light-bg: #1e293b;
-            --text-light: #e2e8f0;
-            --text-dark: #94a3b8;
-            --accent: #3b82f6;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: var(--dark-bg);
-            color: var(--text-light);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            padding: 1rem 2rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            cursor: pointer;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: var(--text-dark);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--text-light);
-        }
-
-        .btn {
-            padding: 0.5rem 1.5rem;
-            border-radius: 0.5rem;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-primary {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--text-light);
-            border: 1px solid var(--text-dark);
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--text-light);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: radial-gradient(circle at 20% 50%, rgba(37, 99, 235, 0.2) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.2) 0%, transparent 50%);
-            padding: 2rem;
-            text-align: center;
-        }
-
-        .hero-content h1 {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-content p {
-            font-size: 1.5rem;
-            color: var(--text-dark);
-            margin-bottom: 2rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-        }
-
-        /* Features Section */
-        .features {
-            padding: 5rem 2rem;
-            background: var(--light-bg);
-        }
-
-        .features-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .features h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .feature-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 1rem;
-            padding: 2rem;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            border-color: var(--primary-color);
-        }
-
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .feature-card h3 {
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-        }
-
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background: var(--light-bg);
-            border-radius: 1rem;
-            padding: 2rem;
-            width: 90%;
-            max-width: 400px;
-            position: relative;
-            animation: slideIn 0.3s ease-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-dark);
-        }
-
-        .close-modal:hover {
-            color: var(--text-light);
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-dark);
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 0.75rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 0.5rem;
-            color: var(--text-light);
-            font-size: 1rem;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        /* Dashboard */
-        .dashboard {
-            display: none;
-            min-height: 100vh;
-            padding-top: 80px;
-        }
-
-        .dashboard-header {
-            background: var(--light-bg);
-            padding: 2rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .dashboard-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-
-        /* Demo Container */
-        .demo-container {
-            width: 100%;
-            height: calc(100vh - 200px);
-            background: #000;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .demo-iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .demo-loading {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-        }
-
-        .spinner {
-            border: 3px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            border-top: 3px solid var(--primary-color);
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero-content p {
-                font-size: 1.2rem;
-            }
-            
-            .nav-links {
-                display: none;
-            }
-            
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Error Message */
-        .error-message {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: #ef4444;
-            padding: 0.75rem;
-            border-radius: 0.5rem;
-            margin-bottom: 1rem;
-            display: none;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
+
 <body>
-    <!-- Navigation -->
     <nav>
         <div class="nav-container">
             <div class="logo" onclick="showHome()">RoboSpace</div>
             <div class="nav-links">
                 <a href="#features">Features</a>
                 <a href="#about">About</a>
+                <a href="#pricing">Pricing</a>
                 <a href="#" onclick="showLogin()">Login</a>
                 <a href="#" onclick="showSignup()" class="btn btn-primary">Get Started</a>
             </div>
         </div>
     </nav>
 
-    <!-- Home Page -->
     <div id="homePage" class="page">
-        <!-- Hero Section -->
         <section class="hero">
             <div class="hero-content">
                 <h1>Welcome to RoboSpace</h1>
@@ -400,7 +38,6 @@
             </div>
         </section>
 
-        <!-- Features Section -->
         <section class="features" id="features">
             <div class="features-container">
                 <h2>Powerful Features</h2>
@@ -438,13 +75,203 @@
                 </div>
             </div>
         </section>
-    </div>
 
-    <!-- Dashboard -->
+        <section class="about" id="about">
+            <div class="about-container">
+                <div class="about-hero">
+                    <h2>About RoboSpace</h2>
+                    <p class="about-subtitle">Pioneering the future of robot simulation and development</p>
+                </div>
+        
+                <div class="about-content">
+                    <div class="about-story">
+                        <div class="story-text">
+                            <h3>Our Mission</h3>
+                            <p>RoboSpace was founded with a simple yet ambitious goal: to democratize robot simulation and make advanced robotics accessible to everyone. We believe that the future of robotics lies not just in hardware, but in the ability to rapidly prototype, test, and iterate in virtual environments.</p>
+                            
+                            <p>Our platform combines cutting-edge physics simulation with intuitive web-based interfaces, enabling researchers, developers, and students to focus on innovation rather than infrastructure.</p>
+                        </div>
+                        <div class="story-image">
+                            <div class="image-placeholder">
+                                <div class="robot-animation">🤖</div>
+                                <p>Advanced Robot Simulation</p>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">100+</div>
+                            <div class="stat-label">Simulations Run</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">7</div>
+                            <div class="stat-label">Active Users</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">5</div>
+                            <div class="stat-label">Robot Models</div>
+                        </div>
+                        <!-- <div class="stat-item">
+                            <div class="stat-number">99.9%</div>
+                            <div class="stat-label">Uptime</div>
+                        </div> -->
+                    </div>
+        
+                    <div class="about-values">
+                        <h3>Our Values</h3>
+                        <div class="values-grid">
+                            <div class="value-card">
+                                <div class="value-icon">🚀</div>
+                                <h4>Innovation</h4>
+                                <p>We push the boundaries of what's possible in robot simulation, constantly exploring new technologies and methodologies.</p>
+                            </div>
+                            <div class="value-card">
+                                <div class="value-icon">🌍</div>
+                                <h4>Accessibility</h4>
+                                <p>Advanced robotics tools shouldn't be limited to those with expensive hardware. We make simulation accessible through the web.</p>
+                            </div>
+                            <div class="value-card">
+                                <div class="value-icon">🤝</div>
+                                <h4>Community</h4>
+                                <p>We believe in the power of collaboration and open research to advance the field of robotics for everyone.</p>
+                            </div>
+                            <!-- <div class="value-card">
+                                <div class="value-icon">🔬</div>
+                                <h4>Precision</h4>
+                                <p>Our physics engine delivers accurate, reliable simulations that you can trust for research and development.</p>
+                            </div> -->
+                        </div>
+                    </div>
+        
+                    <div class="about-cta">
+                        <h3>Ready to Get Started?</h3>
+                        <p>Join thousands of developers and researchers who are already using RoboSpace to build the future of robotics.</p>
+                        <div class="cta-buttons">
+                            <button class="btn btn-primary" onclick="showSignup()">Start Free Trial</button>
+                            <button class="btn btn-secondary" onclick="window.location.href='#pricing'">View Pricing</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="pricing" id="pricing">
+            <div class="pricing-container">
+                <h2>Choose Your Plan</h2>
+                <p class="pricing-subtitle">Start free, scale as you grow</p>
+
+                <div class="pricing-grid">
+                    <!-- Free Plan -->
+                    <div class="pricing-card">
+                        <div class="plan-header">
+                            <h3>Free</h3>
+                            <div class="price">
+                                <span class="currency">$</span>
+                                <span class="amount">0</span>
+                                <span class="period">/month</span>
+                            </div>
+                            <p class="plan-description">Perfect for getting started with robot simulation</p>
+                        </div>
+                        <div class="plan-features">
+                            <ul>
+                                <li>✓ 5 simulation hours/month</li>
+                                <li>✓ Basic robot models</li>
+                                <li>✓ Standard physics engine</li>
+                                <li>✓ Community support</li>
+                                <li>✓ Basic motion datasets</li>
+                            </ul>
+                        </div>
+                        <button class="btn btn-secondary plan-btn" onclick="selectPlan('free')">Get Started
+                            Free</button>
+                    </div>
+
+                    <!-- Pro Plan -->
+                    <div class="pricing-card featured">
+                        <div class="popular-badge">Most Popular</div>
+                        <div class="plan-header">
+                            <h3>Pro</h3>
+                            <div class="price">
+                                <span class="currency">$</span>
+                                <span class="amount">29</span>
+                                <span class="period">/month</span>
+                            </div>
+                            <p class="plan-description">Advanced features for professional development</p>
+                        </div>
+                        <div class="plan-features">
+                            <ul>
+                                <li>✓ Unlimited simulation hours</li>
+                                <li>✓ Advanced robot models</li>
+                                <li>✓ High-fidelity physics</li>
+                                <li>✓ Priority support</li>
+                                <li>✓ Premium motion datasets</li>
+                                <li>✓ Custom environments</li>
+                                <li>✓ Export capabilities</li>
+                                <li>✓ API access</li>
+                            </ul>
+                        </div>
+                        <button class="btn btn-primary plan-btn" onclick="selectPlan('pro')">Start Pro Trial</button>
+                    </div>
+
+                    <!-- Enterprise Plan -->
+                    <div class="pricing-card">
+                        <div class="plan-header">
+                            <h3>Enterprise</h3>
+                            <div class="price">
+                                <span class="currency">$</span>
+                                <span class="amount">99</span>
+                                <span class="period">/month</span>
+                            </div>
+                            <p class="plan-description">Ideal for academic institutions and research labs</p>
+                        </div>
+                        <div class="plan-features">
+                            <ul>
+                                <li>✓ Everything in Pro</li>
+                                <li>✓ Multi-user collaboration</li>
+                                <li>✓ Advanced analytics</li>
+                                <li>✓ Custom integrations</li>
+                                <li>✓ Dedicated support</li>
+                                <li>✓ SSO & security</li>
+                                <li>✓ Custom training</li>
+                                <li>✓ SLA guarantee</li>
+                            </ul>
+                        </div>
+                        <button class="btn btn-primary plan-btn" onclick="selectPlan('enterprise')">Contact
+                            Sales</button>
+                    </div>
+                </div>
+
+                <div class="pricing-faq">
+                    <h3>Frequently Asked Questions</h3>
+                    <div class="faq-grid">
+                        <div class="faq-item">
+                            <h4>Can I switch plans anytime?</h4>
+                            <p>Yes, you can upgrade or downgrade your plan at any time. Changes take effect immediately.
+                            </p>
+                        </div>
+                        <div class="faq-item">
+                            <h4>Is there a free trial?</h4>
+                            <p>Yes! Pro and Enterprise plans come with a 14-day free trial. No credit card required.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h4>What payment methods do you accept?</h4>
+                            <p>We accept all major credit cards, PayPal, and wire transfers for Enterprise customers.
+                            </p>
+                        </div>
+                        <div class="faq-item">
+                            <h4>Do you offer educational discounts?</h4>
+                            <p>Yes! Students and educators get 50% off Pro plans. Contact us for verification.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
     <div id="dashboard" class="dashboard">
         <div class="dashboard-header">
             <div class="dashboard-container">
-                <h2>Robot Simulation Workspace</h2>
+                <h2 class="dashboard-title">Robot Simulation Workspace</h2>
                 <div class="user-info">
                     <span id="userEmail"></span>
                     <div class="user-avatar" id="userAvatar">U</div>
@@ -452,22 +279,20 @@
                 </div>
             </div>
         </div>
-        <div class="demo-container">
+        <div class="demo-container" id="demoContainer">
+            <div class="simulation-controls">
+                <button class="btn-fullscreen" onclick="toggleFullscreen()" id="fullscreenBtn">
+                    🔍 Fullscreen
+                </button>
+            </div>
             <div class="demo-loading" id="demoLoading">
                 <div class="spinner"></div>
                 <p>Loading simulation...</p>
             </div>
-            <iframe 
-                id="demoFrame" 
-                class="demo-iframe" 
-                src=""
-                allow="fullscreen"
-                style="display: none;"
-            ></iframe>
+            <iframe id="demoFrame" class="demo-iframe" src="" allow="fullscreen" style="display: none;"></iframe>
         </div>
     </div>
 
-    <!-- Login Modal -->
     <div id="loginModal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal('loginModal')">&times;</span>
@@ -486,18 +311,10 @@
                 <p style="text-align: center; margin-top: 1rem; color: var(--text-dark);">
                     Don't have an account? <a href="#" onclick="showSignup()" style="color: var(--primary-color);">Sign up</a>
                 </p>
-                <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1);">
-                    <p style="text-align: center; color: var(--text-dark); font-size: 0.875rem;">
-                        <strong>Test Account:</strong><br>
-                        Email: kv@robospace.com<br>
-                        Password: robospace
-                    </p>
-                </div>
             </form>
         </div>
     </div>
 
-    <!-- Signup Modal -->
     <div id="signupModal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal('signupModal')">&times;</span>
@@ -518,177 +335,13 @@
                 </div>
                 <button type="submit" class="btn btn-primary" style="width: 100%;">Sign Up</button>
                 <p style="text-align: center; margin-top: 1rem; color: var(--text-dark);">
-                    Already have an account? <a href="#" onclick="showLogin()" style="color: var(--primary-color);">Login</a>
+                    Already have an account? <a href="#" onclick="showLogin()"
+                        style="color: var(--primary-color);">Login</a>
                 </p>
             </form>
         </div>
     </div>
-
-    <script>
-        // Simple local storage based authentication (for demo purposes)
-        // In production, this should connect to a real backend
-
-        let currentUser = null;
-
-        // Initialize with test user if no users exist
-        function initializeTestUser() {
-            const users = JSON.parse(localStorage.getItem('roboSpaceUsers') || '[]');
-            
-            // Check if test user already exists
-            const testUserExists = users.find(u => u.email === 'kv@robospace.com');
-            
-            if (!testUserExists) {
-                // Add test user
-                users.push({
-                    name: 'Keivalya',
-                    email: 'kv@robospace.com',
-                    password: 'robospace'
-                });
-                localStorage.setItem('roboSpaceUsers', JSON.stringify(users));
-                console.log('Test user created: kv@robospace.com / robospace');
-            }
-        }
-
-        // Check if user is already logged in
-        window.onload = function() {
-            initializeTestUser();
-            const user = localStorage.getItem('roboSpaceUser');
-            if (user) {
-                currentUser = JSON.parse(user);
-                showDashboard();
-            }
-        };
-
-        function showHome() {
-            document.getElementById('homePage').style.display = 'block';
-            document.getElementById('dashboard').style.display = 'none';
-            closeAllModals();
-        }
-
-        function showLogin() {
-            closeAllModals();
-            document.getElementById('loginModal').style.display = 'flex';
-        }
-
-        function showSignup() {
-            closeAllModals();
-            document.getElementById('signupModal').style.display = 'flex';
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-            clearErrors();
-        }
-
-        function closeAllModals() {
-            document.getElementById('loginModal').style.display = 'none';
-            document.getElementById('signupModal').style.display = 'none';
-            clearErrors();
-        }
-
-        function clearErrors() {
-            document.getElementById('loginError').style.display = 'none';
-            document.getElementById('signupError').style.display = 'none';
-        }
-
-        function showError(elementId, message) {
-            const errorElement = document.getElementById(elementId);
-            errorElement.textContent = message;
-            errorElement.style.display = 'block';
-        }
-
-        function handleLogin(event) {
-            event.preventDefault();
-            
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-            
-            // Simple validation (in production, this would call a backend API)
-            const users = JSON.parse(localStorage.getItem('roboSpaceUsers') || '[]');
-            const user = users.find(u => u.email === email && u.password === password);
-            
-            if (user) {
-                currentUser = user;
-                localStorage.setItem('roboSpaceUser', JSON.stringify(user));
-                showDashboard();
-            } else {
-                showError('loginError', 'Invalid email or password');
-            }
-        }
-
-        function handleSignup(event) {
-            event.preventDefault();
-            
-            const name = document.getElementById('signupName').value;
-            const email = document.getElementById('signupEmail').value;
-            const password = document.getElementById('signupPassword').value;
-            
-            // Check if user already exists
-            const users = JSON.parse(localStorage.getItem('roboSpaceUsers') || '[]');
-            if (users.find(u => u.email === email)) {
-                showError('signupError', 'Email already registered');
-                return;
-            }
-            
-            // Create new user
-            const newUser = { name, email, password };
-            users.push(newUser);
-            localStorage.setItem('roboSpaceUsers', JSON.stringify(users));
-            
-            // Auto login
-            currentUser = newUser;
-            localStorage.setItem('roboSpaceUser', JSON.stringify(newUser));
-            showDashboard();
-        }
-
-        function showDashboard() {
-            closeAllModals();
-            document.getElementById('homePage').style.display = 'none';
-            document.getElementById('dashboard').style.display = 'block';
-            
-            // Update user info
-            document.getElementById('userEmail').textContent = currentUser.email;
-            document.getElementById('userAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
-            
-            // Load the demo
-            loadDemo();
-        }
-
-        function loadDemo() {
-            const iframe = document.getElementById('demoFrame');
-            const loading = document.getElementById('demoLoading');
-            
-            // Show loading spinner
-            loading.style.display = 'block';
-            iframe.style.display = 'none';
-            
-            // Set iframe source
-            iframe.src = 'https://www.keivalya.com/robospace-demo/';
-            
-            // Hide loading spinner when iframe loads
-            iframe.onload = function() {
-                loading.style.display = 'none';
-                iframe.style.display = 'block';
-            };
-        }
-
-        function logout() {
-            localStorage.removeItem('roboSpaceUser');
-            currentUser = null;
-            
-            // Clear iframe to stop simulation
-            document.getElementById('demoFrame').src = '';
-            
-            showHome();
-        }
-
-        // Close modals when clicking outside
-        window.onclick = function(event) {
-            if (event.target.classList.contains('modal')) {
-                event.target.style.display = 'none';
-                clearErrors();
-            }
-        };
-    </script>
+    <script src="script.js"></script>
 </body>
+
 </html>
