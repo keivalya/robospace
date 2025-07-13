@@ -234,15 +234,15 @@ window.onclick = function(event) {
     }
 };
 
-// const firebaseConfig = {
-//     apiKey: CONFIG.FIREBASE_API_KEY,
-//     authDomain: CONFIG.FIREBASE_AUTH_DOMAIN,
-//     projectId: CONFIG.FIREBASE_PROJECT_ID,
-//     storageBucket: CONFIG.FIREBASE_STORAGE_BUCKET,
-//     messagingSenderId: CONFIG.FIREBASE_MESSAGING_SENDER_ID,
-//     appId: CONFIG.FIREBASE_APP_ID,
-//     measurementId: CONFIG.FIREBASE_MEASUREMENT_ID
-// };
+const firebaseConfig = {
+    apiKey: "AIzaSyDdsMwMVFSlsTXYAk3NONBD2BOb9SeXkuM",
+    authDomain: "robospace-mvp.firebaseapp.com",
+    projectId: "robospace-mvp",
+    storageBucket: "robospace-mvp.firebasestorage.app",
+    messagingSenderId: "304361370352",
+    appId: "1:304361370352:web:044510ea0df63a0bda8835",
+    measurementId: "G-H4Z87KHRM4"
+  };
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
