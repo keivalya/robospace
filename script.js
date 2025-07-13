@@ -235,12 +235,13 @@ window.onclick = function(event) {
 };
 
 const firebaseConfig = {
-    apiKey: "your-api-key",
-    authDomain: "your-project.firebaseapp.com",
-    projectId: "your-project-id",
-    storageBucket: "your-project.appspot.com",
-    messagingSenderId: "123456789",
-    appId: "your-app-id"
+    apiKey: CONFIG.FIREBASE_API_KEY,
+    authDomain: CONFIG.FIREBASE_AUTH_DOMAIN,
+    projectId: CONFIG.FIREBASE_PROJECT_ID,
+    storageBucket: CONFIG.FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: CONFIG.FIREBASE_MESSAGING_SENDER_ID,
+    appId: CONFIG.FIREBASE_APP_ID,
+    measurementId: CONFIG.FIREBASE_MEASUREMENT_ID
 };
 
 // Initialize Firebase
@@ -438,23 +439,137 @@ async function selectPlan(planType) {
 // Simulation session tracking
 let simulationStartTime = null;
 
-// Updated loadDemo function
 function loadDemo() {
     const iframe = document.getElementById('demoFrame');
     const loading = document.getElementById('demoLoading');
     
+    console.log('Loading simulation...');
+    
+    // Show loading spinner
     loading.style.display = 'block';
     iframe.style.display = 'none';
     
+    // Set iframe source - this should work for all users
     iframe.src = 'https://www.keivalya.com/robospace-demo/';
     
+    // Add timeout in case iframe doesn't load
+    const loadTimeout = setTimeout(() => {
+        console.warn('Iframe load timeout - showing anyway');
+        loading.style.display = 'none';
+        iframe.style.display = 'block';
+    }, 10000); // 10 second timeout
+    
+    // Hide loading spinner when iframe loads
     iframe.onload = function() {
+        console.log('Simulation loaded successfully');
+        clearTimeout(loadTimeout);
         loading.style.display = 'none';
         iframe.style.display = 'block';
         
         // Start tracking simulation time
         simulationStartTime = Date.now();
     };
+    
+    // Handle iframe load errors
+    iframe.onerror = function() {
+        console.error('Failed to load simulation');
+        clearTimeout(loadTimeout);
+        loading.innerHTML = '<p style="color: #ef4444;">Failed to load simulation. Please try again.</p>';
+    };
+}
+
+// Updated showDashboard function to ensure simulation loads
+function showDashboard() {
+    closeAllModals();
+    document.getElementById('homePage').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    
+    // Update user info if we have currentUser
+    if (currentUser) {
+        document.getElementById('userEmail').textContent = currentUser.email;
+        const displayName = currentUser.displayName || currentUser.email;
+        document.getElementById('userAvatar').textContent = displayName.charAt(0).toUpperCase();
+    }
+    
+    // Always load the demo regardless of plan
+    console.log('Dashboard shown, loading simulation...');
+    loadDemo();
+}
+
+function showDashboardFallback() {
+    closeAllModals();
+    document.getElementById('homePage').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    
+    // Set fallback user info
+    document.getElementById('userEmail').textContent = 'keivalyapandya@gmail.com';
+    document.getElementById('userAvatar').textContent = 'K';
+    
+    // Load simulation
+    console.log('Dashboard shown (fallback), loading simulation...');
+    loadDemo();
+}
+
+// Debug function to test simulation loading
+function testSimulationLoad() {
+    console.log('Testing simulation load...');
+    const iframe = document.getElementById('demoFrame');
+    const loading = document.getElementById('demoLoading');
+    
+    // Reset iframe
+    iframe.src = '';
+    loading.style.display = 'block';
+    iframe.style.display = 'none';
+    
+    // Try loading after a short delay
+    setTimeout(() => {
+        iframe.src = 'https://www.keivalya.com/robospace-demo/';
+        
+        iframe.onload = function() {
+            console.log('Test load successful');
+            loading.style.display = 'none';
+            iframe.style.display = 'block';
+        };
+    }, 500);
+}
+
+// Alternative simulation URL in case the main one doesn't work
+function loadAlternativeDemo() {
+    const iframe = document.getElementById('demoFrame');
+    const loading = document.getElementById('demoLoading');
+    
+    console.log('Loading alternative demo...');
+    
+    // You can replace this with any working demo URL
+    const alternativeUrls = [
+        'https://www.keivalya.com/robospace-demo/',
+        'https://threejs.org/examples/webgl_animation_skinning_blending.html',
+        'https://robohash.org/robot.png' // Fallback image
+    ];
+    
+    let currentIndex = 0;
+    
+    function tryNextUrl() {
+        if (currentIndex < alternativeUrls.length) {
+            iframe.src = alternativeUrls[currentIndex];
+            currentIndex++;
+        } else {
+            loading.innerHTML = '<p style="color: #ef4444;">Unable to load simulation. Please check your internet connection.</p>';
+        }
+    }
+    
+    iframe.onload = function() {
+        loading.style.display = 'none';
+        iframe.style.display = 'block';
+        simulationStartTime = Date.now();
+    };
+    
+    iframe.onerror = function() {
+        console.warn(`Failed to load URL: ${alternativeUrls[currentIndex - 1]}`);
+        tryNextUrl();
+    };
+    
+    tryNextUrl();
 }
 
 // Track simulation end

@@ -7,6 +7,7 @@
     <title>RoboSpace - Advanced Robot Simulation Platform</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
+    <script src="config.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -82,14 +83,19 @@
                     <h2>About RoboSpace</h2>
                     <p class="about-subtitle">Pioneering the future of robot simulation and development</p>
                 </div>
-        
+
                 <div class="about-content">
                     <div class="about-story">
                         <div class="story-text">
                             <h3>Our Mission</h3>
-                            <p>RoboSpace was founded with a simple yet ambitious goal: to democratize robot simulation and make advanced robotics accessible to everyone. We believe that the future of robotics lies not just in hardware, but in the ability to rapidly prototype, test, and iterate in virtual environments.</p>
-                            
-                            <p>Our platform combines cutting-edge physics simulation with intuitive web-based interfaces, enabling researchers, developers, and students to focus on innovation rather than infrastructure.</p>
+                            <p>RoboSpace was founded with a simple yet ambitious goal: to democratize robot simulation
+                                and make advanced robotics accessible to everyone. We believe that the future of
+                                robotics lies not just in hardware, but in the ability to rapidly prototype, test, and
+                                iterate in virtual environments.</p>
+
+                            <p>Our platform combines cutting-edge physics simulation with intuitive web-based
+                                interfaces, enabling researchers, developers, and students to focus on innovation rather
+                                than infrastructure.</p>
                         </div>
                         <div class="story-image">
                             <div class="image-placeholder">
@@ -98,7 +104,7 @@
                             </div>
                         </div>
                     </div>
-        
+
                     <div class="about-stats">
                         <div class="stat-item">
                             <div class="stat-number">100+</div>
@@ -117,24 +123,27 @@
                             <div class="stat-label">Uptime</div>
                         </div> -->
                     </div>
-        
+
                     <div class="about-values">
                         <h3>Our Values</h3>
                         <div class="values-grid">
                             <div class="value-card">
                                 <div class="value-icon">🚀</div>
                                 <h4>Innovation</h4>
-                                <p>We push the boundaries of what's possible in robot simulation, constantly exploring new technologies and methodologies.</p>
+                                <p>We push the boundaries of what's possible in robot simulation, constantly exploring
+                                    new technologies and methodologies.</p>
                             </div>
                             <div class="value-card">
                                 <div class="value-icon">🌍</div>
                                 <h4>Accessibility</h4>
-                                <p>Advanced robotics tools shouldn't be limited to those with expensive hardware. We make simulation accessible through the web.</p>
+                                <p>Advanced robotics tools shouldn't be limited to those with expensive hardware. We
+                                    make simulation accessible through the web.</p>
                             </div>
                             <div class="value-card">
                                 <div class="value-icon">🤝</div>
                                 <h4>Community</h4>
-                                <p>We believe in the power of collaboration and open research to advance the field of robotics for everyone.</p>
+                                <p>We believe in the power of collaboration and open research to advance the field of
+                                    robotics for everyone.</p>
                             </div>
                             <!-- <div class="value-card">
                                 <div class="value-icon">🔬</div>
@@ -143,13 +152,15 @@
                             </div> -->
                         </div>
                     </div>
-        
+
                     <div class="about-cta">
                         <h3>Ready to Get Started?</h3>
-                        <p>Join thousands of developers and researchers who are already using RoboSpace to build the future of robotics.</p>
+                        <p>Join thousands of developers and researchers who are already using RoboSpace to build the
+                            future of robotics.</p>
                         <div class="cta-buttons">
                             <button class="btn btn-primary" onclick="showSignup()">Start Free Trial</button>
-                            <button class="btn btn-secondary" onclick="window.location.href='#pricing'">View Pricing</button>
+                            <button class="btn btn-secondary" onclick="window.location.href='#pricing'">View
+                                Pricing</button>
                         </div>
                     </div>
                 </div>
@@ -279,6 +290,25 @@
                 </div>
             </div>
         </div>
+        <!-- Add these debug buttons to your dashboard (temporary for testing) -->
+        <!-- <div class="debug-controls"
+            style="position: fixed; bottom: 20px; left: 20px; z-index: 1000; display: flex; gap: 10px;">
+            <button class="btn btn-secondary" onclick="testSimulationLoad()"
+                style="font-size: 0.8rem; padding: 0.5rem;">
+                🔄 Reload Sim
+            </button>
+            <button class="btn btn-secondary" onclick="loadAlternativeDemo()"
+                style="font-size: 0.8rem; padding: 0.5rem;">
+                🔧 Alt Demo
+            </button>
+            <button class="btn btn-secondary"
+                onclick="console.log('Iframe src:', document.getElementById('demoFrame').src)"
+                style="font-size: 0.8rem; padding: 0.5rem;">
+                🐛 Debug
+            </button>
+        </div> -->
+
+        <!-- Also update your iframe to have better error handling -->
         <div class="demo-container" id="demoContainer">
             <div class="simulation-controls">
                 <button class="btn-fullscreen" onclick="toggleFullscreen()" id="fullscreenBtn">
@@ -288,8 +318,12 @@
             <div class="demo-loading" id="demoLoading">
                 <div class="spinner"></div>
                 <p>Loading simulation...</p>
+                <p style="font-size: 0.8rem; color: var(--text-dark); margin-top: 1rem;">
+                    If this takes too long, try the reload button below.
+                </p>
             </div>
-            <iframe id="demoFrame" class="demo-iframe" src="" allow="fullscreen" style="display: none;"></iframe>
+            <iframe id="demoFrame" class="demo-iframe" src="" allow="fullscreen; accelerometer; gyroscope"
+                sandbox="allow-same-origin allow-scripts allow-forms" style="display: block; margin: 0 auto;"></iframe>
         </div>
     </div>
 
@@ -309,7 +343,8 @@
                 </div>
                 <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
                 <p style="text-align: center; margin-top: 1rem; color: var(--text-dark);">
-                    Don't have an account? <a href="#" onclick="showSignup()" style="color: var(--primary-color);">Sign up</a>
+                    Don't have an account? <a href="#" onclick="showSignup()" style="color: var(--primary-color);">Sign
+                        up</a>
                 </p>
             </form>
         </div>
