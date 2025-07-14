@@ -1,0 +1,56 @@
+<!-- Login Modal -->
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal('loginModal')">&times;</span>
+        <h2>Login to RoboSpace</h2>
+        <div class="error-message" id="loginError"></div>
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="loginEmail" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="loginPassword" required>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+            <p style="text-align: center; margin-top: 1rem; color: var(--text-dark);">
+                Don't have an account? <a href="#" onclick="showSignup()" style="color: var(--primary-color);">Sign
+                    up</a>
+            </p>
+        </form>
+        <p style="text-align: center; margin-top: 1rem; color: var(--text-dark);">
+            <strong>Test Account</strong><br>
+            test@test.com<br>
+            test@123
+        </p>
+    </div>
+</div>
+
+<!-- Signup Modal -->
+<div id="signupModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal('signupModal')">&times;</span>
+        <h2>Create Your Account</h2>
+        <div class="error-message" id="signupError"></div>
+        <form id="signupForm" onsubmit="handleSignup(event)">
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" id="signupName" required>
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="signupEmail" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="signupPassword" required minlength="6">
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Sign Up</button>
+            <p style="text-align: center; margin-top: 1rem; color: var(--text-dark);">
+                Already have an account? <a href="#" onclick="showLogin()"
+                    style="color: var(--primary-color);">Login</a>
+            </p>
+        </form>
+    </div>
+</div>

@@ -1,19 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RoboSpace - Advanced Robot Simulation Platform</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
-
 <body>
+    <!-- Navigation -->
     <nav>
         <div class="nav-container">
             <div class="logo" onclick="showHome()">RoboSpace</div>
@@ -39,342 +34,44 @@
         </div>
     </nav>
 
+    <!-- Home Page Content -->
     <div id="homePage" class="page">
+        <!-- Hero Section -->
         <section class="hero">
             <div class="hero-content">
                 <h1>Welcome to RoboSpace</h1>
                 <p>Experience cutting-edge robot simulation and control in your browser</p>
                 <div class="hero-buttons">
                     <button class="btn btn-primary" onclick="showSignup()">Let's Gooo!</button>
-                    <!-- <button class="btn btn-secondary" onclick="showLogin()">Login</button> -->
                 </div>
             </div>
         </section>
 
-        <section class="features" id="features">
-            <div class="features-container">
-                <h2>Powerful Features</h2>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">🎮</div>
-                        <h3>Real-time Control</h3>
-                        <p>Control robot joints with keyboard and GUI controls in real-time</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">📊</div>
-                        <h3>Dataset Playback</h3>
-                        <p>Load and replay motion datasets including walk, run, and squat animations</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">📷</div>
-                        <h3>Dynamic Camera</h3>
-                        <p>Automatic camera following with adjustable distance and height</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🤖</div>
-                        <h3>Multiple Robots</h3>
-                        <p>Support for various robot models including humanoids and quadrupeds</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🔬</div>
-                        <h3>Physics Simulation</h3>
-                        <p>Powered by MuJoCo physics engine for accurate dynamics</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🚀</div>
-                        <h3>Web-based</h3>
-                        <p>No installation required - runs entirely in your browser</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="about" id="about">
-            <div class="about-container">
-                <div class="about-hero">
-                    <h2>About RoboSpace</h2>
-                    <p class="about-subtitle">Pioneering the future of robot simulation and development</p>
-                </div>
-
-                <div class="about-content">
-                    <div class="about-story">
-                        <div class="story-text">
-                            <h3>Our Mission</h3>
-                            <p>RoboSpace was founded with a simple yet ambitious goal: to democratize robot simulation
-                                and make advanced robotics accessible to everyone. We believe that the future of
-                                robotics lies not just in hardware, but in the ability to rapidly prototype, test, and
-                                iterate in virtual environments.</p>
-
-                            <p>Our platform combines cutting-edge physics simulation with intuitive web-based
-                                interfaces, enabling researchers, developers, and students to focus on innovation rather
-                                than infrastructure.</p>
-                        </div>
-                        <div class="story-image">
-                            <div class="image-placeholder">
-                                <div class="robot-animation">🤖</div>
-                                <p>Advanced Robot Simulation</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="about-stats">
-                        <div class="stat-item">
-                            <div class="stat-number">100+</div>
-                            <div class="stat-label">Simulations Run</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">7</div>
-                            <div class="stat-label">Active Users</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">5</div>
-                            <div class="stat-label">Robot Models</div>
-                        </div>
-                        <!-- <div class="stat-item">
-                            <div class="stat-number">99.9%</div>
-                            <div class="stat-label">Uptime</div>
-                        </div> -->
-                    </div>
-
-                    <div class="about-values">
-                        <h3>Our Values</h3>
-                        <div class="values-grid">
-                            <div class="value-card">
-                                <div class="value-icon">🚀</div>
-                                <h4>Innovation</h4>
-                                <p>We push the boundaries of what's possible in robot simulation, constantly exploring
-                                    new technologies and methodologies.</p>
-                            </div>
-                            <div class="value-card">
-                                <div class="value-icon">🌍</div>
-                                <h4>Accessibility</h4>
-                                <p>Advanced robotics tools shouldn't be limited to those with expensive hardware. We
-                                    make simulation accessible through the web.</p>
-                            </div>
-                            <div class="value-card">
-                                <div class="value-icon">🤝</div>
-                                <h4>Community</h4>
-                                <p>We believe in the power of collaboration and open research to advance the field of
-                                    robotics for everyone.</p>
-                            </div>
-                            <!-- <div class="value-card">
-                                <div class="value-icon">🔬</div>
-                                <h4>Precision</h4>
-                                <p>Our physics engine delivers accurate, reliable simulations that you can trust for research and development.</p>
-                            </div> -->
-                        </div>
-                    </div>
-
-                    <div class="about-cta">
-                        <h3>Ready to Get Started?</h3>
-                        <p>Join thousands of developers and researchers who are already using RoboSpace to build the
-                            future of robotics.</p>
-                        <div class="cta-buttons">
-                            <button class="btn btn-primary" onclick="showSignup()">Start Free Trial</button>
-                            <button class="btn btn-secondary" onclick="window.location.href='#pricing'">View
-                                Pricing</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="pricing" id="pricing">
-            <div class="pricing-container">
-                <h2>Choose Your Plan</h2>
-                <p class="pricing-subtitle">Start free, scale as you grow</p>
-
-                <div class="pricing-grid">
-                    <!-- Free Plan -->
-                    <div class="pricing-card">
-                        <div class="plan-header">
-                            <h3>Free</h3>
-                            <div class="price">
-                                <span class="currency">$</span>
-                                <span class="amount">0</span>
-                                <span class="period">/month</span>
-                            </div>
-                            <p class="plan-description">Perfect for getting started with robot simulation</p>
-                        </div>
-                        <div class="plan-features">
-                            <ul>
-                                <li>✓ 5 simulation hours/month</li>
-                                <li>✓ Basic robot models</li>
-                                <li>✓ Standard physics engine</li>
-                                <li>✓ Community support</li>
-                                <li>✓ Basic motion datasets</li>
-                            </ul>
-                        </div>
-                        <button class="btn btn-secondary plan-btn" onclick="selectPlan('free')">Get Started
-                            Free</button>
-                    </div>
-
-                    <!-- Pro Plan -->
-                    <div class="pricing-card featured">
-                        <div class="popular-badge">Most Popular</div>
-                        <div class="plan-header">
-                            <h3>Pro</h3>
-                            <div class="price">
-                                <span class="currency">$</span>
-                                <span class="amount">29</span>
-                                <span class="period">/month</span>
-                            </div>
-                            <p class="plan-description">Advanced features for professional development</p>
-                        </div>
-                        <div class="plan-features">
-                            <ul>
-                                <li>✓ Unlimited simulation hours</li>
-                                <li>✓ Advanced robot models</li>
-                                <li>✓ High-fidelity physics</li>
-                                <li>✓ Priority support</li>
-                                <li>✓ Premium motion datasets</li>
-                                <li>✓ Custom environments</li>
-                                <li>✓ Export capabilities</li>
-                                <li>✓ API access</li>
-                            </ul>
-                        </div>
-                        <button class="btn btn-primary plan-btn" onclick="selectPlan('pro')">Start Pro Trial</button>
-                    </div>
-
-                    <!-- Enterprise Plan -->
-                    <div class="pricing-card">
-                        <div class="plan-header">
-                            <h3>Enterprise</h3>
-                            <div class="price">
-                                <span class="currency">$</span>
-                                <span class="amount">99</span>
-                                <span class="period">/month</span>
-                            </div>
-                            <p class="plan-description">Ideal for academic institutions and research labs</p>
-                        </div>
-                        <div class="plan-features">
-                            <ul>
-                                <li>✓ Everything in Pro</li>
-                                <li>✓ Multi-user collaboration</li>
-                                <li>✓ Advanced analytics</li>
-                                <li>✓ Custom integrations</li>
-                                <li>✓ Dedicated support</li>
-                                <li>✓ SSO & security</li>
-                                <li>✓ Custom training</li>
-                                <li>✓ SLA guarantee</li>
-                            </ul>
-                        </div>
-                        <button class="btn btn-primary plan-btn" onclick="selectPlan('enterprise')">Contact
-                            Sales</button>
-                    </div>
-                </div>
-
-                <div class="pricing-faq">
-                    <h3>Frequently Asked Questions</h3>
-                    <div class="faq-grid">
-                        <div class="faq-item">
-                            <h4>Can I switch plans anytime?</h4>
-                            <p>Yes, you can upgrade or downgrade your plan at any time. Changes take effect immediately.
-                            </p>
-                        </div>
-                        <div class="faq-item">
-                            <h4>Is there a free trial?</h4>
-                            <p>Yes! Pro and Enterprise plans come with a 14-day free trial. No credit card required.</p>
-                        </div>
-                        <div class="faq-item">
-                            <h4>What payment methods do you accept?</h4>
-                            <p>We accept all major credit cards, PayPal, and wire transfers for Enterprise customers.
-                            </p>
-                        </div>
-                        <div class="faq-item">
-                            <h4>Do you offer educational discounts?</h4>
-                            <p>Yes! Students and educators get 50% off Pro plans. Contact us for verification.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </div>
-    <div id="dashboard" class="dashboard">
-        <div class="dashboard-header">
-            <div class="dashboard-container">
-                <h2 class="dashboard-title">Robot Simulation Workspace</h2>
-                <div class="dashboard-info">
-                    <span class="session-status">●</span>
-                    <span class="session-text">Active Session</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Also update your iframe to have better error handling -->
-        <div class="demo-container" id="demoContainer">
-            <div class="simulation-controls">
-                <button class="btn-fullscreen" onclick="toggleFullscreen()" id="fullscreenBtn">
-                    🔍 Fullscreen
-                </button>
-            </div>
-            <div class="demo-loading" id="demoLoading">
-                <div class="spinner"></div>
-                <p>Loading simulation...</p>
-                <p style="font-size: 0.8rem; color: var(--text-dark); margin-top: 1rem;">
-                    If this takes too long, try the reload button below.
-                </p>
-            </div>
-            <iframe id="demoFrame" class="demo-iframe" src="" allow="fullscreen; accelerometer; gyroscope"
-                sandbox="allow-same-origin allow-scripts allow-forms" style="display: block; margin: 0 auto;"></iframe>
-        </div>
+        <!-- Load Features Section -->
+        <div id="featuresContainer"></div>
+        
+        <!-- Load About Section -->
+        <div id="aboutContainer"></div>
+        
+        <!-- Load Pricing Section -->
+        <div id="pricingContainer"></div>
     </div>
 
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal('loginModal')">&times;</span>
-            <h2>Login to RoboSpace</h2>
-            <div class="error-message" id="loginError"></div>
-            <form id="loginForm" onsubmit="handleLogin(event)">
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" id="loginEmail" required>
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="loginPassword" required>
-                </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
-                <p style="text-align: center; margin-top: 1rem; color: var(--text-dark);">
-                    Don't have an account? <a href="#" onclick="showSignup()" style="color: var(--primary-color);">Sign
-                        up</a>
-                </p>
-            </form>
-            <p style="text-align: center; margin-top: 1rem; color: var(--text-dark);">
-                <strong>Test Account</strong><br>
-                test@test.com<br>
-                test@123
-            </p>
-        </div>
-    </div>
+    <!-- Dashboard will be loaded dynamically -->
+    <div id="dashboardContainer"></div>
 
-    <div id="signupModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal('signupModal')">&times;</span>
-            <h2>Create Your Account</h2>
-            <div class="error-message" id="signupError"></div>
-            <form id="signupForm" onsubmit="handleSignup(event)">
-                <div class="form-group">
-                    <label>Name</label>
-                    <input type="text" id="signupName" required>
-                </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" id="signupEmail" required>
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="signupPassword" required minlength="6">
-                </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">Sign Up</button>
-                <p style="text-align: center; margin-top: 1rem; color: var(--text-dark);">
-                    Already have an account? <a href="#" onclick="showLogin()"
-                        style="color: var(--primary-color);">Login</a>
-                </p>
-            </form>
-        </div>
-    </div>
+    <!-- Load Modals -->
+    <div id="modalsContainer"></div>
+
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    
+    <!-- Application Scripts -->
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/app.js"></script>
 </body>
-
 </html>

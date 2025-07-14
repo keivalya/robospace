@@ -1,0 +1,28 @@
+<div id="dashboard" class="dashboard">
+    <div class="dashboard-header">
+        <div class="dashboard-container">
+            <h2 class="dashboard-title">Robot Simulation Workspace</h2>
+            <div class="dashboard-info">
+                <span class="session-status">●</span>
+                <span class="session-text">Active Session</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="demo-container" id="demoContainer">
+        <div class="simulation-controls">
+            <button class="btn-fullscreen" onclick="toggleFullscreen()" id="fullscreenBtn">
+                🔍 Fullscreen
+            </button>
+        </div>
+        <div class="demo-loading" id="demoLoading">
+            <div class="spinner"></div>
+            <p>Loading simulation...</p>
+            <p style="font-size: 0.8rem; color: var(--text-dark); margin-top: 1rem;">
+                If this takes too long, try the reload button below.
+            </p>
+        </div>
+        <iframe id="demoFrame" class="demo-iframe" src="" allow="fullscreen; accelerometer; gyroscope"
+            sandbox="allow-same-origin allow-scripts allow-forms" style="display: block; margin: 0 auto;"></iframe>
+    </div>
+</div>
