@@ -71,7 +71,7 @@ function initializeLocalStorageAuth() {
 
 // Initialize with test user if no users exist
 // function initializeTestUser() {
-//     const users = JSON.parse(localStorage.getItem('roboSpaceUsers') || '[]');
+//     const users = JSON.parse(localStorage.getItem('robuSpaceUsers') || '[]');
     
 //     // Check if test user already exists
 //     const testUserExists = users.find(u => u.email === 'kv@robospace.com');
@@ -83,7 +83,7 @@ function initializeLocalStorageAuth() {
 //             email: 'kv@robospace.com',
 //             password: 'robospace'
 //         });
-//         localStorage.setItem('roboSpaceUsers', JSON.stringify(users));
+//         localStorage.setItem('robuSpaceUsers', JSON.stringify(users));
 //         console.log('Test user created: kv@robospace.com / robospace');
 //     }
 // }
@@ -164,7 +164,7 @@ async function handleSignup(event) {
     
     if (!auth) {
         // Fallback to localStorage
-        const users = JSON.parse(localStorage.getItem('roboSpaceUsers') || '[]');
+        const users = JSON.parse(localStorage.getItem('robuSpaceUsers') || '[]');
         if (users.find(u => u.email === email)) {
             showError('signupError', 'Email already registered');
             return;
@@ -172,7 +172,7 @@ async function handleSignup(event) {
         
         const newUser = { name, email, password };
         users.push(newUser);
-        localStorage.setItem('roboSpaceUsers', JSON.stringify(users));
+        localStorage.setItem('robuSpaceUsers', JSON.stringify(users));
         
         currentUser = newUser;
         localStorage.setItem('roboSpaceUser', JSON.stringify(newUser));
@@ -217,7 +217,7 @@ async function handleLogin(event) {
     
     if (!auth) {
         // Fallback to localStorage
-        const users = JSON.parse(localStorage.getItem('roboSpaceUsers') || '[]');
+        const users = JSON.parse(localStorage.getItem('robuSpaceUsers') || '[]');
         const user = users.find(u => u.email === email && u.password === password);
         
         if (user) {
