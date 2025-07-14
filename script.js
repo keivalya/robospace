@@ -58,7 +58,7 @@ window.onload = function() {
 
 // Fallback to localStorage if Firebase fails
 function initializeLocalStorageAuth() {
-    initializeTestUser();
+    // initializeTestUser();
     const user = localStorage.getItem('roboSpaceUser');
     if (user) {
         currentUser = JSON.parse(user);
@@ -70,23 +70,23 @@ function initializeLocalStorageAuth() {
 }
 
 // Initialize with test user if no users exist
-function initializeTestUser() {
-    const users = JSON.parse(localStorage.getItem('roboSpaceUsers') || '[]');
+// function initializeTestUser() {
+//     const users = JSON.parse(localStorage.getItem('roboSpaceUsers') || '[]');
     
-    // Check if test user already exists
-    const testUserExists = users.find(u => u.email === 'kv@robospace.com');
+//     // Check if test user already exists
+//     const testUserExists = users.find(u => u.email === 'kv@robospace.com');
     
-    if (!testUserExists) {
-        // Add test user
-        users.push({
-            name: 'Keivalya',
-            email: 'kv@robospace.com',
-            password: 'robospace'
-        });
-        localStorage.setItem('roboSpaceUsers', JSON.stringify(users));
-        console.log('Test user created: kv@robospace.com / robospace');
-    }
-}
+//     if (!testUserExists) {
+//         // Add test user
+//         users.push({
+//             name: 'Keivalya',
+//             email: 'kv@robospace.com',
+//             password: 'robospace'
+//         });
+//         localStorage.setItem('roboSpaceUsers', JSON.stringify(users));
+//         console.log('Test user created: kv@robospace.com / robospace');
+//     }
+// }
 
 async function updateLastLogin() {
     if (!currentUser || !db) return;
