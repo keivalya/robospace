@@ -119,7 +119,7 @@ async function handleSignup(event) {
     
     if (!window.auth) {
         // Fallback to localStorage
-        const users = JSON.parse(localStorage.getItem('robuSpaceUsers') || '[]');
+        const users = JSON.parse(localStorage.getItem('roboSpaceUsers') || '[]');
         if (users.find(u => u.email === email)) {
             showError('signupError', 'Email already registered');
             return;
@@ -127,7 +127,7 @@ async function handleSignup(event) {
         
         const newUser = { name, email, password };
         users.push(newUser);
-        localStorage.setItem('robuSpaceUsers', JSON.stringify(users));
+        localStorage.setItem('roboSpaceUsers', JSON.stringify(users));
         
         window.currentUser = newUser;
         localStorage.setItem('roboSpaceUser', JSON.stringify(newUser));
@@ -171,7 +171,7 @@ async function handleLogin(event) {
     
     if (!window.auth) {
         // Fallback to localStorage
-        const users = JSON.parse(localStorage.getItem('robuSpaceUsers') || '[]');
+        const users = JSON.parse(localStorage.getItem('roboSpaceUsers') || '[]');
         const user = users.find(u => u.email === email && u.password === password);
         
         if (user) {
@@ -267,7 +267,7 @@ function initializeLocalStorageAuth() {
 
 // Initialize with test user if no users exist
 function initializeTestUser() {
-    const users = JSON.parse(localStorage.getItem('robuSpaceUsers') || '[]');
+    const users = JSON.parse(localStorage.getItem('roboSpaceUsers') || '[]');
     
     // Check if test user already exists
     const testUserExists = users.find(u => u.email === 'test@test.com');
@@ -279,7 +279,7 @@ function initializeTestUser() {
             email: 'test@test.com',
             password: 'test@123'
         });
-        localStorage.setItem('robuSpaceUsers', JSON.stringify(users));
+        localStorage.setItem('roboSpaceUsers', JSON.stringify(users));
         console.log('Test user created: test@test.com / test@123');
     }
 }
