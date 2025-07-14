@@ -427,9 +427,17 @@ nav {
     .dashboard-title {
         font-size: 1.25rem;
     }
+
+    #loggedInNav {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    #navUserEmail {
+        display: none;
+    }
 }
 
-/* Error Message */
 .error-message {
     background: rgba(239, 68, 68, 0.1);
     border: 1px solid rgba(239, 68, 68, 0.3);
@@ -905,4 +913,26 @@ nav {
         width: 100%;
         max-width: 300px;
     }
+}
+
+/* Navigation user email styling */
+#navUserEmail {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.dashboard-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.session-status {
+    color: #10b981;
+    font-size: 0.75rem;
+}
+
+.session-text {
+    color: var(--text-dark);
+    font-size: 0.875rem;
 }

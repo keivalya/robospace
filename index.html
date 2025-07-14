@@ -17,12 +17,24 @@
     <nav>
         <div class="nav-container">
             <div class="logo" onclick="showHome()">RoboSpace</div>
-            <div class="nav-links">
+            
+            <!-- Navigation links for logged-out users -->
+            <div class="nav-links" id="loggedOutNav">
                 <a href="#features">Features</a>
-                <a href="#about">About</a>
                 <a href="#pricing">Pricing</a>
+                <a href="#about">About</a>
                 <a href="#" onclick="showLogin()">Login</a>
                 <a href="#" onclick="showSignup()" class="btn btn-primary">Get Started</a>
+            </div>
+            
+            <!-- Navigation links for logged-in users -->
+            <div class="nav-links" id="loggedInNav" style="display: none;">
+                <a href="#" onclick="showDashboard()">Dashboard</a>
+                <a href="#features">Features</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#about">About</a>
+                <span id="navUserEmail" style="color: var(--text-dark); margin-right: 1rem;"></span>
+                <button class="btn btn-secondary" onclick="logout()">Logout</button>
             </div>
         </div>
     </nav>
@@ -283,30 +295,17 @@
         <div class="dashboard-header">
             <div class="dashboard-container">
                 <h2 class="dashboard-title">Robot Simulation Workspace</h2>
-                <div class="user-info">
+                <div class="dashboard-info">
+                    <span class="session-status">●</span>
+                    <span class="session-text">Active Session</span>
+                </div>
+                <!-- <div class="user-info">
                     <span id="userEmail"></span>
                     <div class="user-avatar" id="userAvatar">U</div>
                     <button class="btn btn-secondary" onclick="logout()">Logout</button>
-                </div>
+                </div> -->
             </div>
         </div>
-        <!-- Add these debug buttons to your dashboard (temporary for testing) -->
-        <!-- <div class="debug-controls"
-            style="position: fixed; bottom: 20px; left: 20px; z-index: 1000; display: flex; gap: 10px;">
-            <button class="btn btn-secondary" onclick="testSimulationLoad()"
-                style="font-size: 0.8rem; padding: 0.5rem;">
-                🔄 Reload Sim
-            </button>
-            <button class="btn btn-secondary" onclick="loadAlternativeDemo()"
-                style="font-size: 0.8rem; padding: 0.5rem;">
-                🔧 Alt Demo
-            </button>
-            <button class="btn btn-secondary"
-                onclick="console.log('Iframe src:', document.getElementById('demoFrame').src)"
-                style="font-size: 0.8rem; padding: 0.5rem;">
-                🐛 Debug
-            </button>
-        </div> -->
 
         <!-- Also update your iframe to have better error handling -->
         <div class="demo-container" id="demoContainer">

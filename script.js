@@ -34,15 +34,18 @@ window.onload = function() {
         console.log('Firebase initialized successfully');
         
         // Auth state observer
-        auth.onAuthStateChanged((user) => {
+        auth.onAuthStateChanged(async (user) => {
             if (user) {
                 currentUser = user;
                 console.log('User signed in:', user.email);
+                updateNavigation(true, user);
+                await updateLastLogin();
                 loadUserData();
                 showDashboard();
             } else {
                 currentUser = null;
                 console.log('User signed out');
+                updateNavigation(false);
                 showHome();
             }
         });
@@ -59,7 +62,10 @@ function initializeLocalStorageAuth() {
     const user = localStorage.getItem('roboSpaceUser');
     if (user) {
         currentUser = JSON.parse(user);
+        updateNavigation(true, currentUser);
         showDashboard();
+    } else {
+        updateNavigation(false);
     }
 }
 
@@ -79,6 +85,38 @@ function initializeTestUser() {
         });
         localStorage.setItem('roboSpaceUsers', JSON.stringify(users));
         console.log('Test user created: kv@robospace.com / robospace');
+    }
+}
+
+async function updateLastLogin() {
+    if (!currentUser || !db) return;
+    
+    try {
+        await db.collection('users').doc(currentUser.uid).update({
+            lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        console.log('Last login updated successfully');
+    } catch (error) {
+        console.error('Error updating last login:', error);
+    }
+}
+
+// Function to update navigation based on auth state
+function updateNavigation(isLoggedIn, user = null) {
+    const loggedOutNav = document.getElementById('loggedOutNav');
+    const loggedInNav = document.getElementById('loggedInNav');
+    const navUserEmail = document.getElementById('navUserEmail');
+    
+    if (isLoggedIn && user) {
+        loggedOutNav.style.display = 'none';
+        loggedInNav.style.display = 'flex';
+        
+        if (navUserEmail) {
+            navUserEmail.textContent = user.email || user.displayName || 'User';
+        }
+    } else {
+        loggedOutNav.style.display = 'flex';
+        loggedInNav.style.display = 'none';
     }
 }
 
@@ -211,16 +249,15 @@ async function logout() {
             console.error('Logout error:', error);
         }
     } else {
-        // localStorage fallback
         localStorage.removeItem('roboSpaceUser');
         currentUser = null;
+        
+        updateNavigation(false);
         showHome();
     }
     
-    // Clear iframe
     document.getElementById('demoFrame').src = '';
     
-    // Exit fullscreen if active
     if (isFullscreen) {
         toggleFullscreen();
     }
@@ -336,13 +373,15 @@ function showDashboard() {
     closeAllModals();
     document.getElementById('homePage').style.display = 'none';
     document.getElementById('dashboard').style.display = 'block';
+
+    updateNavigation(true, currentUser);
     
     // Update user info if we have currentUser
-    if (currentUser) {
-        document.getElementById('userEmail').textContent = currentUser.email;
-        const displayName = currentUser.displayName || currentUser.name || currentUser.email;
-        document.getElementById('userAvatar').textContent = displayName.charAt(0).toUpperCase();
-    }
+    // if (currentUser) {
+        // document.getElementById('userEmail').textContent = currentUser.email;
+        // const displayName = currentUser.displayName || currentUser.name || currentUser.email;
+        // document.getElementById('userAvatar').textContent = displayName.charAt(0).toUpperCase();
+    // }
     
     // Always load the demo regardless of plan
     console.log('Dashboard shown, loading simulation...');
@@ -353,6 +392,8 @@ function showHome() {
     document.getElementById('homePage').style.display = 'block';
     document.getElementById('dashboard').style.display = 'none';
     closeAllModals();
+
+    updateNavigation(!!currentUser, currentUser);
 }
 
 function showLogin() {
