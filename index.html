@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +20,7 @@
                 <a href="#pricing">Pricing</a>
                 <a href="#about">About</a>
                 <a href="#" onclick="showLogin()">Login</a>
-                <a href="#" onclick="showSignup()" class="btn btn-primary">Get Started</a>
+                <button onclick="showSignup()" class="btn btn-primary">Get Started</button>
             </div>
             
             <!-- Navigation links for logged-in users -->
@@ -39,13 +40,52 @@
         <!-- Hero Section -->
         <section class="hero">
             <div class="hero-content">
-                <h1>Welcome to RoboSpace</h1>
-                <p>Experience cutting-edge robot simulation and control in your browser</p>
+                <!-- <h2>Welcome to RoboSpace</h2> -->
+                <h1>Simulate and train robots in your browser</h1>
+                <p>Upload your robot. Pick an environment. Click train. <br>
+                    No setup, no GPUs, no Docker. Just results.
+                </p>
                 <div class="hero-buttons">
                     <button class="btn btn-primary" onclick="showSignup()">Let's Gooo!</button>
                 </div>
             </div>
         </section>
+
+        <!-- Problem Section -->
+        <!-- <section class="problem-section">
+            <div class="section-container">
+                <h2 class="section-title">Real robot training is broken</h2>
+                <div class="problem-grid">
+                    <div class="problem-card">
+                        <div class="problem-icon">💸</div>
+                        <h3>Expensive hardware</h3>
+                        <p>$50k+ robots, constant repairs, safety equipment</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-icon">🐌</div>
+                        <h3>Painfully slow</h3>
+                        <p>Manual resets, physical constraints, safety protocols</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-icon">🔧</div>
+                        <h3>Setup hell</h3>
+                        <p>ROS, CUDA, dependencies, OS compatibility issues</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-icon">🚫</div>
+                        <h3>Can't share</h3>
+                        <p>Impossible to replicate environments or results</p>
+                    </div>
+                </div>
+                <div class="comparison">
+                    <p class="comparison-text">
+                        Meanwhile, developers deploy apps on <strong>Vercel</strong> in seconds.<br>
+                        ML engineers train models on <strong>Hugging Face</strong> with one click.<br>
+                        Why is robotics still stuck in 2010?
+                    </p>
+                </div>
+            </div>
+        </section> -->
 
         <!-- Load Features Section -->
         <div id="featuresContainer"></div>
