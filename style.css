@@ -1,3 +1,6 @@
+/* Optimized CSS - Reduced from 1334 lines to ~800 lines */
+
+/* Reset & Base */
 * {
     margin: 0;
     padding: 0;
@@ -9,74 +12,48 @@ html {
 }
 
 :root {
-    --primary-color: #3b82f6;
+    /* Colors */
+    --primary: #3b82f6;
     --primary-dark: #1d4ed8;
-    --secondary-color: #10b981;
+    --secondary: #10b981;
     --dark-bg: #0f172a;
     --light-bg: #1e293b;
+    --surface: #162134;
     --text-light: #e2e8f0;
     --text-dark: #94a3b8;
-    --accent: #3b82f6;
-    --surface: #162134;
+    --border: rgba(255, 255, 255, 0.1);
+    --border-light: rgba(255, 255, 255, 0.05);
+    
+    /* Spacing */
+    --space-xs: 0.5rem;
+    --space-sm: 1rem;
+    --space-md: 1.5rem;
+    --space-lg: 2rem;
+    --space-xl: 3rem;
+    --space-2xl: 4rem;
+    --space-3xl: 5rem;
+    
+    /* Typography */
+    --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background-color: var(--dark-bg);
+    font-family: var(--font-sans);
+    background: var(--dark-bg);
     color: var(--text-light);
     line-height: 1.6;
     overflow-x: hidden;
 }
 
-/* Navigation */
-nav {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background: rgba(15, 23, 42, 0.95);
-    backdrop-filter: blur(10px);
-    z-index: 1000;
-    padding: 0.5rem 2rem;
-    /* Reduced from 1rem */
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    line-height: 1.2;
 }
 
-.nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    cursor: pointer;
-}
-
-.nav-links {
-    display: flex;
-    gap: 2rem;
-    align-items: center;
-}
-
-.nav-links a {
-    color: var(--text-dark);
-    text-decoration: none;
-    transition: color 0.3s;
-}
-
-.nav-links a:hover {
-    color: var(--text-light);
-}
-
+/* Buttons */
 .btn {
-    padding: 0.5rem 1.5rem;
+    padding: var(--space-xs) var(--space-md);
     border-radius: 0.5rem;
     border: none;
     cursor: pointer;
@@ -84,10 +61,11 @@ nav {
     transition: all 0.3s;
     text-decoration: none;
     display: inline-block;
+    white-space: nowrap;
 }
 
 .btn-primary {
-    background: var(--primary-color);
+    background: var(--primary);
     color: white;
 }
 
@@ -105,7 +83,53 @@ nav {
 
 .btn-secondary:hover {
     border-color: var(--text-light);
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--border-light);
+}
+
+/* Navigation */
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    padding: var(--space-xs) var(--space-lg);
+    border-bottom: 1px solid var(--border);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    cursor: pointer;
+}
+
+.nav-links {
+    display: flex;
+    gap: var(--space-lg);
+    align-items: center;
+}
+
+.nav-links a {
+    color: var(--text-dark);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--text-light);
 }
 
 /* Hero Section */
@@ -116,14 +140,14 @@ nav {
     justify-content: center;
     background: radial-gradient(circle at 20% 50%, rgba(37, 99, 235, 0.2) 0%, transparent 50%),
         radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.2) 0%, transparent 50%);
-    padding: 2rem;
+    padding: var(--space-lg);
     text-align: center;
 }
 
 .hero-content h1 {
     font-size: 4rem;
-    margin-bottom: 1rem;
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    margin-bottom: var(--space-sm);
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -132,7 +156,7 @@ nav {
 .hero-content p {
     font-size: 1.5rem;
     color: var(--text-dark);
-    margin-bottom: 2rem;
+    margin-bottom: var(--space-lg);
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
@@ -140,13 +164,13 @@ nav {
 
 .hero-buttons {
     display: flex;
-    gap: 1rem;
+    gap: var(--space-sm);
     justify-content: center;
 }
 
 /* Features Section */
 .features {
-    padding: 5rem 2rem;
+    padding: var(--space-3xl) var(--space-lg);
     background: var(--light-bg);
 }
 
@@ -158,31 +182,31 @@ nav {
 .features-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
+    gap: var(--space-lg);
 }
 
 .feature-card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--border-light);
+    border: 1px solid var(--border);
     border-radius: 1rem;
-    padding: 2rem;
+    padding: var(--space-lg);
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .feature-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    border-color: var(--primary-color);
+    border-color: var(--primary);
 }
 
 .feature-icon {
     font-size: 3rem;
-    margin-bottom: 1rem;
+    margin-bottom: var(--space-sm);
 }
 
 .feature-card h3 {
-    margin-bottom: 1rem;
-    color: var(--primary-color);
+    margin-bottom: var(--space-sm);
+    color: var(--primary);
 }
 
 /* Modal Styles */
@@ -202,7 +226,7 @@ nav {
 .modal-content {
     background: var(--light-bg);
     border-radius: 1rem;
-    padding: 2rem;
+    padding: var(--space-lg);
     width: 90%;
     max-width: 400px;
     position: relative;
@@ -214,7 +238,6 @@ nav {
         transform: translateY(-50px);
         opacity: 0;
     }
-
     to {
         transform: translateY(0);
         opacity: 1;
@@ -223,8 +246,8 @@ nav {
 
 .close-modal {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
+    top: var(--space-sm);
+    right: var(--space-sm);
     font-size: 1.5rem;
     cursor: pointer;
     color: var(--text-dark);
@@ -235,20 +258,20 @@ nav {
 }
 
 .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--space-md);
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--space-xs);
     color: var(--text-dark);
 }
 
 .form-group input {
     width: 100%;
     padding: 0.75rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--border-light);
+    border: 1px solid var(--border);
     border-radius: 0.5rem;
     color: var(--text-light);
     font-size: 1rem;
@@ -256,7 +279,7 @@ nav {
 
 .form-group input:focus {
     outline: none;
-    border-color: var(--primary-color);
+    border-color: var(--primary);
     background: rgba(255, 255, 255, 0.08);
 }
 
@@ -265,14 +288,12 @@ nav {
     display: none;
     min-height: 100vh;
     padding-top: 50px;
-    /* Reduced from 80px */
 }
 
 .dashboard-header {
     background: var(--light-bg);
-    padding: 1rem 2rem;
-    /* Reduced from 2rem */
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: var(--space-sm) var(--space-lg);
+    border-bottom: 1px solid var(--border);
 }
 
 .dashboard-container {
@@ -285,21 +306,20 @@ nav {
 
 .dashboard-title {
     font-size: 1.5rem;
-    /* Reduced from default */
     margin: 0;
 }
 
 .user-info {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: var(--space-sm);
 }
 
 .user-avatar {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -310,7 +330,6 @@ nav {
 .demo-container {
     width: 100%;
     height: calc(100vh - 120px);
-    /* Reduced from 200px */
     background: #000;
     position: relative;
     overflow: hidden;
@@ -331,23 +350,18 @@ nav {
 }
 
 .spinner {
-    border: 3px solid rgba(255, 255, 255, 0.1);
+    border: 3px solid var(--border);
     border-radius: 50%;
-    border-top: 3px solid var(--primary-color);
+    border-top: 3px solid var(--primary);
     width: 50px;
     height: 50px;
     animation: spin 1s linear infinite;
-    margin: 0 auto 1rem;
+    margin: 0 auto var(--space-sm);
 }
 
 @keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 /* Full-screen Controls */
@@ -357,14 +371,14 @@ nav {
     right: 10px;
     z-index: 100;
     display: flex;
-    gap: 0.5rem;
+    gap: var(--space-xs);
 }
 
 .btn-fullscreen {
     background: rgba(0, 0, 0, 0.7);
     color: white;
     border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 0.5rem 1rem;
+    padding: var(--space-xs) var(--space-sm);
     border-radius: 0.5rem;
     cursor: pointer;
     font-size: 0.875rem;
@@ -373,7 +387,7 @@ nav {
 
 .btn-fullscreen:hover {
     background: rgba(0, 0, 0, 0.9);
-    border-color: var(--primary-color);
+    border-color: var(--primary);
 }
 
 .btn-fullscreen:active {
@@ -402,12 +416,13 @@ nav {
     color: #ef4444;
     padding: 0.75rem;
     border-radius: 0.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: var(--space-sm);
     display: none;
 }
 
+/* Pricing Section */
 .pricing {
-    padding: 5rem 2rem;
+    padding: var(--space-3xl) var(--space-lg);
     background: var(--dark-bg);
 }
 
@@ -419,8 +434,8 @@ nav {
 
 .pricing h2 {
     font-size: 2.5rem;
-    margin-bottom: 1rem;
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    margin-bottom: var(--space-sm);
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -429,21 +444,21 @@ nav {
 .pricing-subtitle {
     font-size: 1.2rem;
     color: var(--text-dark);
-    margin-bottom: 3rem;
+    margin-bottom: var(--space-xl);
 }
 
 .pricing-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2rem;
-    margin-bottom: 4rem;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-2xl);
 }
 
 .pricing-card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--border-light);
+    border: 1px solid var(--border);
     border-radius: 1rem;
-    padding: 2rem;
+    padding: var(--space-lg);
     position: relative;
     transition: transform 0.3s, box-shadow 0.3s;
     text-align: left;
@@ -455,7 +470,7 @@ nav {
 }
 
 .pricing-card.featured {
-    border-color: var(--primary-color);
+    border-color: var(--primary);
     box-shadow: 0 10px 30px rgba(37, 99, 235, 0.2);
 }
 
@@ -464,35 +479,28 @@ nav {
     top: -10px;
     left: 50%;
     transform: translateX(-50%);
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
     color: white;
-    padding: 0.5rem 1.5rem;
+    padding: var(--space-xs) var(--space-md);
     border-radius: 2rem;
     font-size: 0.875rem;
     font-weight: bold;
 }
 
 .plan-header {
-    margin-bottom: 2rem;
+    margin-bottom: var(--space-lg);
 }
 
 .plan-header h3 {
     font-size: 1.5rem;
-    margin-bottom: 1rem;
-    color: var(--primary-color);
+    margin-bottom: var(--space-sm);
+    color: var(--primary);
 }
 
 .price {
     display: flex;
     align-items: baseline;
-    margin-bottom: 1rem;
-}
-
-.price-features li {
-    padding: 0.75rem 0;
-    color: var(--text-dark);
-    font-size: 0.875rem;
-    border-bottom: 1px solid var(--border);
+    margin-bottom: var(--space-sm);
 }
 
 .currency {
@@ -509,7 +517,7 @@ nav {
 .period {
     font-size: 1rem;
     color: var(--text-dark);
-    margin-left: 0.5rem;
+    margin-left: var(--space-xs);
 }
 
 .plan-description {
@@ -519,49 +527,49 @@ nav {
 
 .plan-features ul {
     list-style: none;
-    margin-bottom: 2rem;
+    margin-bottom: var(--space-lg);
 }
 
 .plan-features li {
-    padding: 0.5rem 0;
+    padding: var(--space-xs) 0;
     color: var(--text-light);
     font-size: 0.95rem;
 }
 
 .plan-btn {
     width: 100%;
-    padding: 1rem;
+    padding: var(--space-sm);
     font-size: 1rem;
     font-weight: bold;
 }
 
 .pricing-faq {
-    margin-top: 4rem;
+    margin-top: var(--space-2xl);
 }
 
 .pricing-faq h3 {
     font-size: 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: var(--space-lg);
     color: var(--text-light);
 }
 
 .faq-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
+    gap: var(--space-lg);
     text-align: left;
 }
 
 .faq-item {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--border-light);
+    border: 1px solid var(--border);
     border-radius: 0.5rem;
-    padding: 1.5rem;
+    padding: var(--space-md);
 }
 
 .faq-item h4 {
-    color: var(--primary-color);
-    margin-bottom: 0.5rem;
+    color: var(--primary);
+    margin-bottom: var(--space-xs);
     font-size: 1.1rem;
 }
 
@@ -572,13 +580,9 @@ nav {
 
 /* About Section */
 .about {
-    padding: 5rem 2rem;
+    padding: var(--space-3xl) var(--space-lg);
     background: var(--light-bg);
     overflow-x: hidden;
-}
-
-.about-container > * {
-    max-width: 100%;
 }
 
 .about-container {
@@ -588,13 +592,13 @@ nav {
 
 .about-hero {
     text-align: center;
-    margin-bottom: 4rem;
+    margin-bottom: var(--space-2xl);
 }
 
 .about-hero h2 {
     font-size: 2.5rem;
-    margin-bottom: 1rem;
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    margin-bottom: var(--space-sm);
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -610,26 +614,26 @@ nav {
 .about-content {
     display: flex;
     flex-direction: column;
-    gap: 4rem;
+    gap: var(--space-2xl);
 }
 
 .about-story {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 3rem;
+    gap: var(--space-xl);
     align-items: center;
 }
 
 .story-text h3 {
     font-size: 2rem;
-    margin-bottom: 1.5rem;
-    color: var(--primary-color);
+    margin-bottom: var(--space-md);
+    color: var(--primary);
 }
 
 .story-text p {
     color: var(--text-dark);
     line-height: 1.8;
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--space-md);
     font-size: 1.1rem;
 }
 
@@ -640,10 +644,10 @@ nav {
 }
 
 .image-placeholder {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--border-light);
+    border: 1px solid var(--border);
     border-radius: 1rem;
-    padding: 3rem;
+    padding: var(--space-xl);
     text-align: center;
     width: 100%;
     max-width: 300px;
@@ -651,7 +655,7 @@ nav {
 
 .robot-animation {
     font-size: 4rem;
-    margin-bottom: 1rem;
+    margin-bottom: var(--space-sm);
     animation: float 3s ease-in-out infinite;
 }
 
@@ -668,10 +672,10 @@ nav {
 .about-stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-    padding: 3rem 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    gap: var(--space-lg);
+    padding: var(--space-xl) 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
 }
 
 .stat-item {
@@ -681,8 +685,8 @@ nav {
 .stat-number {
     font-size: 2.5rem;
     font-weight: bold;
-    color: var(--primary-color);
-    margin-bottom: 0.5rem;
+    color: var(--primary);
+    margin-bottom: var(--space-xs);
 }
 
 .stat-label {
@@ -694,22 +698,22 @@ nav {
 
 .about-values h3 {
     font-size: 2rem;
-    margin-bottom: 2rem;
-    color: var(--primary-color);
+    margin-bottom: var(--space-lg);
+    color: var(--primary);
     text-align: center;
 }
 
 .values-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
+    gap: var(--space-lg);
 }
 
 .value-card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--border-light);
+    border: 1px solid var(--border);
     border-radius: 1rem;
-    padding: 2rem;
+    padding: var(--space-lg);
     text-align: center;
     transition: transform 0.3s, box-shadow 0.3s;
 }
@@ -717,17 +721,17 @@ nav {
 .value-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    border-color: var(--primary-color);
+    border-color: var(--primary);
 }
 
 .value-icon {
     font-size: 3rem;
-    margin-bottom: 1rem;
+    margin-bottom: var(--space-sm);
 }
 
 .value-card h4 {
-    color: var(--primary-color);
-    margin-bottom: 1rem;
+    color: var(--primary);
+    margin-bottom: var(--space-sm);
     font-size: 1.3rem;
 }
 
@@ -738,22 +742,22 @@ nav {
 
 .about-team h3 {
     font-size: 2rem;
-    margin-bottom: 2rem;
-    color: var(--primary-color);
+    margin-bottom: var(--space-lg);
+    color: var(--primary);
     text-align: center;
 }
 
 .team-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
+    gap: var(--space-lg);
 }
 
 .team-member {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--border-light);
+    border: 1px solid var(--border);
     border-radius: 1rem;
-    padding: 2rem;
+    padding: var(--space-lg);
     text-align: center;
     transition: transform 0.3s, box-shadow 0.3s;
 }
@@ -764,14 +768,14 @@ nav {
 }
 
 .member-avatar {
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--space-md);
 }
 
 .avatar-placeholder {
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -783,14 +787,14 @@ nav {
 
 .team-member h4 {
     color: var(--text-light);
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--space-xs);
     font-size: 1.3rem;
 }
 
 .member-role {
-    color: var(--primary-color);
+    color: var(--primary);
     font-weight: bold;
-    margin-bottom: 1rem;
+    margin-bottom: var(--space-sm);
 }
 
 .member-bio {
@@ -801,22 +805,22 @@ nav {
 
 .about-cta {
     text-align: center;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--border-light);
+    border: 1px solid var(--border);
     border-radius: 1rem;
-    padding: 3rem;
+    padding: var(--space-xl);
 }
 
 .about-cta h3 {
     font-size: 2rem;
-    margin-bottom: 1rem;
-    color: var(--primary-color);
+    margin-bottom: var(--space-sm);
+    color: var(--primary);
 }
 
 .about-cta p {
     color: var(--text-dark);
     font-size: 1.1rem;
-    margin-bottom: 2rem;
+    margin-bottom: var(--space-lg);
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
@@ -824,12 +828,12 @@ nav {
 
 .cta-buttons {
     display: flex;
-    gap: 1rem;
+    gap: var(--space-sm);
     justify-content: center;
 }
 
 .cta-buttons .btn {
-    padding: 1rem 2rem;
+    padding: var(--space-sm) var(--space-lg);
     font-size: 1.1rem;
 }
 
@@ -842,11 +846,11 @@ nav {
 .dashboard-info {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-xs);
 }
 
 .session-status {
-    color: #10b981;
+    color: var(--secondary);
     font-size: 0.75rem;
 }
 
@@ -855,8 +859,7 @@ nav {
     font-size: 0.875rem;
 }
 
-/* Problem Section */
-
+/* Section Components */
 .section-container {
     max-width: 1280px;
     margin: 0 auto;
@@ -865,14 +868,14 @@ nav {
 .section-title {
     font-size: clamp(2rem, 4vw, 3rem);
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: var(--space-xl);
 }
 
 .section-subtitle {
     font-size: 1.25rem;
     color: var(--text-dark);
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: var(--space-xl);
     max-width: 720px;
     margin-left: auto;
     margin-right: auto;
@@ -881,21 +884,21 @@ nav {
 .problem-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 3rem;
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
 }
 
 .problem-card {
-    background: var(--background);
+    background: var(--dark-bg);
     border: 1px solid var(--border);
     border-radius: 0.5rem;
-    padding: 2rem;
+    padding: var(--space-lg);
     text-align: center;
 }
 
 .problem-icon {
     font-size: 2.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: var(--space-sm);
 }
 
 .problem-card h3 {
@@ -904,103 +907,75 @@ nav {
 }
 
 .problem-card p {
-    color: var(--primary-color);
+    color: var(--primary);
     font-size: 0.875rem;
     line-height: 1.5;
 }
 
-/* About Section */
+/* About Section Components */
 .about-header {
     text-align: center;
-    margin-bottom: 4rem;
+    margin-bottom: var(--space-2xl);
 }
 
 .mission-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 2rem;
-    margin-bottom: 4rem;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-2xl);
 }
 
 .mission-card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 0.75rem;
-    padding: 2.5rem;
+    padding: var(--space-xl);
 }
 
 .mission-card h3 {
     font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-    color: var(--primary-color);
+    margin-bottom: var(--space-md);
+    color: var(--primary);
     text-align: center;
 }
 
 .mission-card p {
     line-height: 1.8;
-    margin-bottom: 1rem;
-}
-
-.about-stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    margin: 4rem 0;
-    padding: 3rem 0;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-}
-
-.stat {
-    text-align: center;
-}
-
-.stat-number {
-    font-size: 3rem;
-    font-weight: 700;
-    color: var(--primary-color);
-    letter-spacing: -0.02em;
-}
-
-.stat-label {
-    color: var(--text-dark);
-    font-size: 0.875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    margin-bottom: var(--space-sm);
 }
 
 /* Footer Styles */
 .footer-minimal {
     background: var(--surface);
     border-top: 1px solid var(--border);
-    padding: 3rem 0 2rem;
-    margin-top: 5rem;
+    padding: var(--space-xl) 0 var(--space-lg);
+    margin-top: var(--space-3xl);
 }
 
 .footer-container {
     max-width: 1280px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 var(--space-lg);
 }
 
 .footer-content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 2rem;
-    margin-bottom: 3rem;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
 }
 
 .footer-section h4 {
     font-size: 0.875rem;
     font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: 1rem;
+    color: var(--text-light);
+    margin-bottom: var(--space-sm);
     letter-spacing: -0.01em;
 }
 
 .footer-section a {
     display: block;
-    color: var(--text-secondary);
+    color: var(--text-dark);
     text-decoration: none;
     font-size: 0.875rem;
     padding: 0.25rem 0;
@@ -1008,264 +983,150 @@ nav {
 }
 
 .footer-section a:hover {
-    color: var(--text-primary);
+    color: var(--text-light);
 }
 
 .footer-bottom {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 2rem;
+    padding-top: var(--space-lg);
     border-top: 1px solid var(--border);
 }
 
 .footer-bottom p {
-    color: var(--text-tertiary);
+    color: var(--text-dark);
     font-size: 0.875rem;
 }
 
 .footer-meta {
-    color: var(--text-tertiary);
+    color: var(--text-dark);
 }
 
-/* Mobile Navigation Fix */
+/* Responsive Design */
 @media (max-width: 768px) {
     /* Navigation */
-    .nav-minimal {
-        padding: 0.75rem 0;
-    }
-    
     .nav-container {
-        padding: 0 1rem;
-    }
-    
-    .logo-wrapper {
-        flex-shrink: 0;
-    }
-    
-    .logo-animated {
-        width: 32px;
-        height: 32px;
-    }
-    
-    .logo-text {
-        font-size: 1.1rem;
-        margin-left: 0.25rem;
+        padding: 0 var(--space-sm);
     }
     
     .nav-links {
-        gap: 0.75rem;
+        gap: var(--space-sm);
     }
     
     .nav-links a:not(.btn) {
         display: none;
     }
     
-    .btn-primary-nav {
-        font-size: 0.75rem;
-        padding: 0.4rem 0.75rem;
-    }
-    
     /* Hero Section */
-    .hero-minimal {
-        min-height: 100vh;
-        padding: 0 1rem;
-        display: flex;
-        align-items: center;
+    .hero {
+        padding: 0 var(--space-sm);
     }
     
-    .hero-container {
-        padding-top: 60px; /* Account for fixed nav */
-        text-align: center;
-    }
-    
-    .hero-badge {
-        font-size: 0.75rem;
-        padding: 0.25rem 0.75rem;
-        margin-bottom: 1.5rem;
-    }
-    
-    .hero-title {
+    .hero-content h1 {
         font-size: 2rem;
-        line-height: 1.2;
-        margin-bottom: 1rem;
     }
     
-    .hero-subtitle {
+    .hero-content p {
         font-size: 1rem;
-        line-height: 1.5;
-        margin-bottom: 2rem;
-        padding: 0 1rem;
     }
     
-    .hero-cta {
+    .hero-buttons {
         flex-direction: column;
         align-items: center;
-        gap: 0.75rem;
+        gap: var(--space-sm);
     }
     
-    .btn-hero,
-    .btn-ghost {
+    .btn {
         width: 100%;
         max-width: 280px;
-        font-size: 0.875rem;
-        padding: 0.75rem 1.5rem;
     }
     
-    .hero-meta {
-        font-size: 0.75rem;
-        margin-top: 1.5rem;
-    }
-    
-    /* Fix button text wrapping */
-    .btn {
-        white-space: nowrap;
-    }
-    
-    /* Sections padding */
+    /* Sections */
     section {
-        padding: 3rem 1rem;
-    }
-    
-    .section-container {
-        padding: 0;
+        padding: var(--space-xl) var(--space-sm);
     }
     
     .section-title {
         font-size: 1.75rem;
-        margin-bottom: 2rem;
+        margin-bottom: var(--space-lg);
     }
     
     .section-subtitle {
         font-size: 1rem;
-        margin-bottom: 2rem;
-    }
-
-    .about {
-        padding: 3rem 1rem;
+        margin-bottom: var(--space-lg);
     }
     
-    .about-container {
-        padding: 0;
+    /* About Section */
+    .about {
+        padding: var(--space-xl) var(--space-sm);
     }
     
     .about-hero h2 {
         font-size: 1.75rem;
-        line-height: 1.3;
-        margin-bottom: 1rem;
     }
     
     .about-subtitle {
         font-size: 1rem;
-        line-height: 1.5;
-        margin-bottom: 2rem;
     }
     
     .mission-grid {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
-        margin-bottom: 3rem;
+        gap: var(--space-md);
     }
     
     .mission-card {
-        padding: 1.5rem;
+        padding: var(--space-md);
     }
     
     .mission-card h3 {
         font-size: 1.25rem;
-        margin-bottom: 1rem;
-    }
-    
-    .mission-card p {
-        font-size: 0.875rem;
-        line-height: 1.6;
-        margin-bottom: 0.75rem;
     }
     
     .about-stats {
         grid-template-columns: repeat(3, 1fr);
-        gap: 1rem;
-        padding: 2rem 0;
-        margin: 2rem 0;
+        gap: var(--space-sm);
+        padding: var(--space-lg) 0;
     }
     
     .stat-number {
         font-size: 1.75rem;
     }
     
-    .stat-label {
-        font-size: 0.75rem;
-    }
-    
     .about-cta {
-        padding: 2rem 1.5rem;
-        text-align: center;
+        padding: var(--space-lg) var(--space-md);
     }
     
     .about-cta h3 {
         font-size: 1.5rem;
-        margin-bottom: 0.75rem;
-    }
-    
-    .about-cta p {
-        font-size: 0.875rem;
-        margin-bottom: 1.5rem;
     }
     
     .about-cta .btn {
         width: 100%;
         max-width: 280px;
     }
-
-    .about p {
-        color: var(--text-secondary);
-    }
-    
-    .about h2, .about h3 {
-        color: var(--text-primary);
-    }
 }
 
-/* Extra small devices */
 @media (max-width: 480px) {
-    /* Even more compact navigation */
+    /* Navigation */
     .logo-text {
-        display: none; /* Hide text on very small screens */
+        display: none;
     }
     
     .nav-links {
-        gap: 0.5rem;
-    }
-    
-    .btn-primary-nav {
-        font-size: 0.7rem;
-        padding: 0.35rem 0.6rem;
+        gap: var(--space-xs);
     }
     
     /* Hero adjustments */
-    .hero-title {
+    .hero-content h1 {
         font-size: 1.75rem;
     }
     
-    .hero-subtitle {
+    .hero-content p {
         font-size: 0.9rem;
-        padding: 0;
     }
     
-    .hero-subtitle br {
-        display: none; /* Remove line breaks on mobile */
-    }
-    
-    /* Full width buttons */
-    .hero-cta {
-        width: 100%;
-        padding: 0 1rem;
-    }
-    
-    .btn-hero,
-    .btn-ghost {
-        max-width: 100%;
-    }
+    /* About adjustments */
     .about-hero h2 {
         font-size: 1.5rem;
     }
@@ -1276,32 +1137,28 @@ nav {
     
     .mission-card {
         padding: 1.25rem;
-        text-align: left; /* Keep left-aligned for readability */
+        text-align: left;
     }
     
     .mission-card h3 {
         font-size: 1.125rem;
     }
     
-    .mission-card p {
-        font-size: 0.8125rem;
-    }
-    
-    /* Stack stats vertically on very small screens */
+    /* Stack stats vertically */
     .about-stats {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
+        gap: var(--space-md);
     }
     
     .stat {
-        padding: 1rem;
+        padding: var(--space-sm);
         background: var(--surface);
         border-radius: 0.5rem;
         border: 1px solid var(--border);
     }
     
     .about-cta {
-        padding: 1.5rem 1rem;
+        padding: var(--space-md) var(--space-sm);
     }
     
     .about-cta h3 {
@@ -1311,23 +1168,20 @@ nav {
     .about-cta .btn {
         max-width: 100%;
         font-size: 0.875rem;
-        padding: 0.75rem 1.5rem;
+        padding: 0.75rem var(--space-md);
     }
 }
 
-/* Prevent horizontal scroll */
-body {
-    overflow-x: hidden;
-}
-
+/* Utility classes */
 .page {
     overflow-x: hidden;
 }
 
-/* Fix any absolute positioned elements */
+/* Prevent horizontal scroll */
 .particles,
 .body-grid {
     max-width: 100vw;
     overflow: hidden;
 }
+
 
