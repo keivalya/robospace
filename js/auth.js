@@ -65,14 +65,33 @@ function initializeFirebase() {
 }
 
 // Update last login timestamp
+// Updated updateLastLogin function with better error handling
 async function updateLastLogin() {
     if (!window.currentUser || !window.db) return;
     
     try {
-        await window.db.collection('users').doc(window.currentUser.uid).update({
-            lastLogin: firebase.firestore.FieldValue.serverTimestamp()
-        });
-        console.log('Last login updated successfully');
+        // Check if document exists first
+        const userDoc = await window.db.collection('users').doc(window.currentUser.uid).get();
+        
+        if (userDoc.exists) {
+            // Update existing document
+            await window.db.collection('users').doc(window.currentUser.uid).update({
+                lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            console.log('Last login updated successfully');
+        } else {
+            // Create document if it doesn't exist (for Google sign-in users)
+            await window.db.collection('users').doc(window.currentUser.uid).set({
+                name: window.currentUser.displayName || 'User',
+                email: window.currentUser.email,
+                plan: localStorage.getItem('selectedPlan') || 'free',
+                simulationHours: 0,
+                totalSimulations: 0,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            console.log('User document created with last login');
+        }
     } catch (error) {
         console.error('Error updating last login:', error);
     }
@@ -98,10 +117,10 @@ async function saveUserData(userData) {
     if (!window.currentUser || !window.db) return;
     
     try {
+        // Always use set with merge to handle both create and update
         await window.db.collection('users').doc(window.currentUser.uid).set({
             ...userData,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+            lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
         }, { merge: true });
         console.log('User data saved successfully');
     } catch (error) {
@@ -254,7 +273,7 @@ function getErrorMessage(errorCode) {
 
 // Fallback to localStorage if Firebase fails
 function initializeLocalStorageAuth() {
-    initializeTestUser();
+    // initializeTestUser(); // Removed to stop creating test user
     const user = localStorage.getItem('roboSpaceUser');
     if (user) {
         window.currentUser = JSON.parse(user);
@@ -265,21 +284,53 @@ function initializeLocalStorageAuth() {
     }
 }
 
-// Initialize with test user if no users exist
-function initializeTestUser() {
-    const users = JSON.parse(localStorage.getItem('roboSpaceUsers') || '[]');
+// Google Login
+async function handleGoogleLogin() {
+    if (!window.auth) {
+        showError('loginError', 'Google login not available offline');
+        return;
+    }
     
-    // Check if test user already exists
-    const testUserExists = users.find(u => u.email === 'test@test.com');
+    const provider = new firebase.auth.GoogleAuthProvider();
     
-    if (!testUserExists) {
-        // Add test user
-        users.push({
-            name: 'Test User',
-            email: 'test@test.com',
-            password: 'test@123'
-        });
-        localStorage.setItem('roboSpaceUsers', JSON.stringify(users));
-        console.log('Test user created: test@test.com / test@123');
+    try {
+        const result = await window.auth.signInWithPopup(provider);
+        const user = result.user;
+        
+        // Check if user document exists
+        const userDoc = await window.db.collection('users').doc(user.uid).get();
+        
+        if (!userDoc.exists) {
+            // Create new user document for first-time Google sign-in
+            await window.db.collection('users').doc(user.uid).set({
+                name: user.displayName || 'User',
+                email: user.email,
+                plan: localStorage.getItem('selectedPlan') || 'free',
+                simulationHours: 0,
+                totalSimulations: 0,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            console.log('New user document created');
+        } else {
+            // Update existing user's last login
+            await window.db.collection('users').doc(user.uid).update({
+                lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            console.log('Existing user last login updated');
+        }
+        
+        console.log('Google sign-in successful');
+        
+    } catch (error) {
+        console.error('Google login error:', error);
+        const loginModal = document.getElementById('loginModal');
+        const signupModal = document.getElementById('signupModal');
+        
+        if (loginModal.style.display === 'flex') {
+            showError('loginError', getErrorMessage(error.code));
+        } else if (signupModal.style.display === 'flex') {
+            showError('signupError', getErrorMessage(error.code));
+        }
     }
 }

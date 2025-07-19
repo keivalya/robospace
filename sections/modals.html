@@ -15,16 +15,16 @@
                 <input type="password" id="loginPassword" required>
             </div>
             <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+            <div style="text-align: center; margin: 1rem 0;">
+                <button type="button" class="btn btn-google" onclick="handleGoogleLogin()" style="width: 100%;">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" style="height: 20px; vertical-align: middle; margin-right: 8px;">
+                    Sign in with Google
+                </button>
+            </div>
             <p style="text-align: center; margin-top: 1rem; color: var(--text-dark);">
-                Don't have an account? <a href="#" onclick="showSignup()" style="color: var(--primary-color);">Sign
-                    up</a>
+                Don't have an account? <a href="#" onclick="showSignup()" style="color: var(--primary-color);">Sign up</a>
             </p>
         </form>
-        <!-- <p style="text-align: center; margin-top: 1rem; color: var(--text-dark);">
-            <strong>Demo RoboSpace</strong><br>
-            test@robospace.app<br>
-            robospace
-        </p> -->
     </div>
 </div>
 
@@ -48,6 +48,12 @@
                 <input type="password" id="signupPassword" required minlength="6">
             </div>
             <button type="submit" class="btn btn-primary" style="width: 100%;">Sign Up</button>
+            <div style="text-align: center; margin: 1rem 0;">
+                <button type="button" class="btn btn-google" onclick="handleGoogleLogin()" style="width: 100%;">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" style="height: 20px; vertical-align: middle; margin-right: 8px;">
+                    Sign up with Google
+                </button>
+            </div>
             <p style="text-align: center; margin-top: 1rem; color: var(--text-dark);">
                 Already have an account? <a href="#" onclick="showLogin()"
                     style="color: var(--primary-color);">Login</a>

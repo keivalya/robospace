@@ -396,14 +396,79 @@ function showHome() {
     updateNavigation(!!currentUser, currentUser);
 }
 
+// Add this debug version of handleGoogleLogin to see what's happening
+async function handleGoogleLogin() {
+    console.log('Google login button clicked');
+    
+    if (!window.auth) {
+        console.error('Firebase auth not initialized');
+        showError('loginError', 'Google login not available offline');
+        return;
+    }
+    
+    console.log('Creating Google Auth Provider');
+    const provider = new firebase.auth.GoogleAuthProvider();
+    
+    try {
+        console.log('Opening Google sign-in popup...');
+        const result = await window.auth.signInWithPopup(provider);
+        console.log('Google sign-in successful:', result.user);
+        
+        const user = result.user;
+        
+        // Save user data to Firestore if new
+        await saveUserData({
+            name: user.displayName,
+            email: user.email,
+            plan: localStorage.getItem('selectedPlan') || 'free',
+            simulationHours: 0,
+            totalSimulations: 0
+        });
+        
+        console.log('User data saved successfully');
+        
+    } catch (error) {
+        console.error('Google login error details:', error);
+        console.error('Error code:', error.code);
+        console.error('Error message:', error.message);
+        
+        // Show error in the appropriate modal
+        const loginModal = document.getElementById('loginModal');
+        const signupModal = document.getElementById('signupModal');
+        
+        if (loginModal.style.display === 'flex') {
+            showError('loginError', getErrorMessage(error.code));
+        } else if (signupModal.style.display === 'flex') {
+            showError('signupError', getErrorMessage(error.code));
+        }
+    }
+}
+
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        console.log('Firebase auth status:', window.auth ? 'Initialized' : 'Not initialized');
+        console.log('Firebase object:', typeof firebase !== 'undefined' ? 'Available' : 'Not available');
+    }, 1000);
+});
+
 function showLogin() {
     closeAllModals();
     document.getElementById('loginModal').style.display = 'flex';
+
+    const googleLoginBtn = document.getElementById('googleLoginBtn');
+    if (googleLoginBtn) {
+        googleLoginBtn.onclick = handleGoogleLogin;
+    }
 }
 
 function showSignup() {
     closeAllModals();
     document.getElementById('signupModal').style.display = 'flex';
+
+    const googleSignupBtn = document.getElementById('googleSignupBtn');
+    if (googleSignupBtn) {
+        googleSignupBtn.onclick = handleGoogleLogin;
+    }
 }
 
 function closeModal(modalId) {
@@ -571,3 +636,14 @@ window.onclick = function(event) {
         clearErrors();
     }
 };
+
+document.addEventListener('DOMContentLoaded', function() {
+    var googleSignupBtn = document.getElementById('googleSignupBtn');
+    if (googleSignupBtn) {
+        googleSignupBtn.addEventListener('click', handleGoogleLogin);
+    }
+    var googleLoginBtn = document.getElementById('googleLoginBtn');
+    if (googleLoginBtn) {
+        googleLoginBtn.addEventListener('click', handleGoogleLogin);
+    }
+});
