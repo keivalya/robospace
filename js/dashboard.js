@@ -223,3 +223,26 @@ window.addEventListener('beforeunload', function() {
         trackSimulationUsage(duration);
     }
 });
+
+// GPU Toggle Handler
+document.addEventListener('DOMContentLoaded', function() {
+    const gpuToggle = document.getElementById('gpuToggle');
+    if (gpuToggle) {
+        gpuToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            // Check if user has Plus plan
+            const user = firebase.auth().currentUser;
+            if (user) {
+                showUpgradePrompt();
+            } else {
+                showLogin();
+            }
+        });
+    }
+});
+
+function showUpgradePrompt() {
+    alert('Upgrade to Plus plan to enable GPU acceleration for faster training!');
+    window.location.href = '#pricing';
+}
+

@@ -1209,3 +1209,152 @@ nav {
     background-color: #e8e8e8;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
+
+/* GPU Toggle Styles */
+.gpu-toggle-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: 1.5rem;
+    padding-left: 1.5rem;
+    border-left: 1px solid var(--border);
+}
+
+.gpu-label {
+    font-size: 0.875rem;
+    color: var(--text-dark);
+    font-weight: 500;
+}
+
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+    cursor: not-allowed;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #2a2a3e; /* Dark background for OFF state */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: 0.3s;
+    border-radius: 24px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 2px;
+    bottom: 2px;
+    background-color: #ffffff; /* White knob */
+    transition: 0.3s;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Disabled state - keep visual elements visible */
+.toggle-switch input:disabled + .toggle-slider {
+    background-color: #1a1a2e; /* Even darker for disabled */
+    opacity: 0.8; /* Slight transparency but still visible */
+}
+
+.toggle-switch input:disabled + .toggle-slider:before {
+    background-color: #888888; /* Gray knob when disabled */
+}
+
+/* Hover effect for disabled state */
+.gpu-toggle-wrapper:hover .toggle-slider {
+    border-color: rgba(59, 130, 246, 0.5);
+    background-color: #2a2a3e;
+}
+
+/* Tooltip - NOW APPEARS BELOW */
+.gpu-tooltip {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--surface);
+    color: var(--text);
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s;
+    margin-top: 0.5rem;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 999; /* Ensure it's below nav but above other content */
+}
+
+/* Arrow pointing UP to the toggle */
+.gpu-tooltip:before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-bottom-color: var(--border);
+}
+
+/* Arrow inner (to match background) */
+.gpu-tooltip:after {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-bottom-color: var(--surface);
+    margin-bottom: -1px;
+}
+
+.gpu-toggle-wrapper:hover .gpu-tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(4px);
+}
+
+/* Active state (for when enabled in the future) */
+.toggle-switch input:checked + .toggle-slider {
+    background-color: var(--primary);
+}
+
+.toggle-switch input:checked + .toggle-slider:before {
+    transform: translateX(20px);
+    background-color: white;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .gpu-toggle-wrapper {
+        margin-left: 1rem;
+        padding-left: 1rem;
+    }
+    
+    .gpu-label {
+        display: none;
+    }
+    
+    .gpu-tooltip {
+        font-size: 0.7rem;
+        padding: 0.375rem 0.75rem;
+    }
+}
