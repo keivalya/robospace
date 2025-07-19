@@ -976,7 +976,7 @@ nav {
     color: var(--text-dark);
     text-decoration: none;
     font-size: 0.875rem;
-    padding: 0.25rem 0;
+    padding: 0.1rem 0;
     transition: color 0.2s;
 }
 
