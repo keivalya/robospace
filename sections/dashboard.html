@@ -1,37 +1,43 @@
 <!-- dashboard.html -->
 <div id="dashboard" class="dashboard">
     <div class="dashboard-header">
-        <div class="dashboard-container">
-            <h2 class="dashboard-title">Robot Simulation Workspace</h2>
-            <div class="gpu-toggle-wrapper">
-                <span class="gpu-label">GPU</span>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="gpuToggle" disabled>
-                    <span class="toggle-slider"></span>
-                </label>
-                <div class="gpu-tooltip">Upgrade to Plus plan for GPU acceleration</div>
-            </div>
-            <div class="dashboard-info">
-                <span class="session-status">●</span>
-                <span class="session-text">Active Session</span>
+        <div class="container">
+            <h2>Robot Simulation Workspace</h2>
+            <div class="dashboard-controls">
+                <div class="gpu-toggle">
+                    <span>GPU</span>
+                    <div class="toggle" title="Upgrade to Plus plan for GPU acceleration">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+                <div class="status">
+                    <span class="status-dot"></span>
+                    <span>Active Session</span>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="demo-container" id="demoContainer">
-        <div class="simulation-controls">
-            <button class="btn-fullscreen" onclick="toggleFullscreen()" id="fullscreenBtn">
+        <div class="demo-controls">
+            <button class="btn btn-outline" onclick="toggleFullscreen()" id="fullscreenBtn">
                 🔍 Fullscreen
             </button>
         </div>
+        
         <div class="demo-loading" id="demoLoading">
             <div class="spinner"></div>
             <p>Loading simulation...</p>
-            <p style="font-size: 0.8rem; color: var(--text-dark); margin-top: 1rem;">
-                If this takes too long, try the reload button below.
+            <p style="font-size: 0.875rem; margin-top: 1rem;">
+                If this takes too long, try refreshing the page.
             </p>
         </div>
-        <iframe id="demoFrame" class="demo-iframe" src="" allow="fullscreen; accelerometer; gyroscope"
-         style="display: block; margin: 0 auto;"></iframe>
+        
+        <iframe 
+            id="demoFrame" 
+            class="demo-iframe" 
+            src="" 
+            allow="fullscreen; accelerometer; gyroscope">
+        </iframe>
     </div>
 </div>

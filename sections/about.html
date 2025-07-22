@@ -1,28 +1,32 @@
 <!-- about.html -->
 <section class="about" id="about">
-    <div class="about-container">
-        <div class="about-hero about-header">
+    <div class="container">
+        <div class="section-header">
             <h2>Built by roboticists, for roboticists</h2>
-            <p class="about-subtitle">
-                We've spent years fighting with ROS dependencies, waiting for real robot resets, and explaining why our experiments aren't reproducible. There had to be a better way.
-            </p>
+            <p>We've spent years fighting with ROS dependencies, waiting for real robot resets, 
+               and explaining why our experiments aren't reproducible. There had to be a better way.</p>
         </div>
-        <div class="mission-grid">
-            <div class="mission-card">
+
+        <div class="grid-2">
+            <div class="card">
                 <h3>The problem we're solving</h3>
-                <p>Every robotics researcher knows the pain: 3 days to set up a simulation environment, another week to get reinforcement learning working, and good luck sharing your setup with anyone else. Meanwhile, web developers deploy entire applications in seconds.</p>
+                <p>Every robotics researcher knows the pain: 3 days to set up a simulation environment, 
+                   another week to get reinforcement learning working, and good luck sharing your setup 
+                   with anyone else. Meanwhile, web developers deploy entire applications in seconds.</p>
                 <p>We asked ourselves: why can't robot training be that simple?</p>
             </div>
-            <div class="mission-card">
+            <div class="card">
                 <h3>Our approach</h3>
-                <p>RoboSpace brings modern developer experience to robotics. Upload your robot model like you'd deploy to Vercel. Configure training like you'd set up a GitHub Action. Share results like you'd share a CodePen.</p>
+                <p>RoboSpace brings modern developer experience to robotics. Upload your robot model 
+                   like you'd deploy to Vercel. Configure training like you'd set up a GitHub Action. 
+                   Share results like you'd share a CodePen.</p>
                 <p>No CUDA installation. No ROS melodic vs noetic debates. Just robotics.</p>
             </div>
         </div>
 
-        <!-- Product Demo Video Section -->
+        <!-- Product Demo Video -->
         <div class="video-section">
-            <h3 class="video-title">See RoboSpace in Action</h3>
+            <h3>See RoboSpace in Action</h3>
             <div class="video-wrapper">
                 <iframe 
                     src="https://www.youtube.com/embed/U5NBmzT-j5c?si=dzDvLm92awY-b-bR" 
@@ -34,7 +38,7 @@
             </div>
         </div>
 
-        <div class="about-stats">
+        <div class="stats">
             <div class="stat">
                 <div class="stat-number">150+</div>
                 <div class="stat-label">Active users</div>
@@ -49,12 +53,11 @@
             </div>
         </div>
 
-        <div class="about-cta">
+        <div class="cta">
             <h3>Ready to skip the setup?</h3>
             <p>Join researchers and engineers building the future of robotics</p>
-            <button class="btn btn-hero" onclick="showSignup()">
-                Start training now
-                <span class="btn-arrow">→</span>
+            <button class="btn btn-primary btn-lg" onclick="showSignup()">
+                Start training now →
             </button>
         </div>
     </div>

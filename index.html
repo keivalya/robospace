@@ -1,32 +1,21 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>RoboSpace - Robot Simulation Platform</title>
     <link rel="icon" href="icon.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
-    <script type="text/javascript">
-        (function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-        })(window, document, "clarity", "script", "sh6qul0g41");
-    </script>
 </head>
 <body>
     <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <div class="logo" onclick="showHome()">
-                RoboSpace
-            </div>
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-brand" onclick="showHome()">RoboSpace</div>
             
-            <!-- Navigation links for logged-out users -->
-            <div class="nav-links" id="loggedOutNav">
+            <!-- Logged Out Navigation -->
+            <div class="nav-menu" id="loggedOutNav">
                 <a href="#features">Features</a>
                 <a href="#about">About</a>
                 <a href="#pricing">Pricing</a>
@@ -34,86 +23,69 @@
                 <button onclick="showSignup()" class="btn btn-primary">Get Started</button>
             </div>
             
-            <!-- Navigation links for logged-in users -->
-            <div class="nav-links" id="loggedInNav" style="display: none;">
+            <!-- Logged In Navigation -->
+            <div class="nav-menu" id="loggedInNav" style="display: none;">
                 <a href="#" onclick="showDashboard()">Dashboard</a>
                 <a href="#features">Features</a>
                 <a href="#about">About</a>
                 <a href="#pricing">Pricing</a>
-                <span id="navUserEmail" style="color: var(--text-dark); margin-right: 1rem;"></span>
-                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+                <span id="navUserEmail" class="nav-user"></span>
+                <button class="btn btn-outline" onclick="logout()">Logout</button>
             </div>
         </div>
     </nav>
 
-    <!-- Home Page Content -->
+    <!-- Home Page -->
     <div id="homePage" class="page">
         <!-- Hero Section -->
         <section class="hero">
-            <div class="hero-content">
-                <!-- <h2>Welcome to RoboSpace</h2> -->
+            <div class="container">
                 <h1>Simulate and train robots in your browser</h1>
-                <p>Upload your robot. Pick an environment. Click train. <br>
+                <p class="hero-subtitle">
+                    Upload your robot. Pick an environment. Click train.<br>
                     No setup, no GPUs, no Docker.
                 </p>
-                <div class="hero-buttons">
-                    <button class="btn btn-primary" onclick="showSignup()">Let's Gooo!</button>
-                    <button class="btn btn-secondary" onclick="showDashboard()">Demo</button>
+                <div class="hero-actions">
+                    <button class="btn btn-primary btn-lg" onclick="showSignup()">Let's Gooo!</button>
+                    <button class="btn btn-outline btn-lg" onclick="showDashboard()">Demo</button>
                 </div>
             </div>
         </section>
 
-        <!-- Problem Section -->
-        <!-- <section class="problem-section">
-            <div class="section-container">
-                <h2 class="section-title">Real robot training is broken</h2>
-                <div class="problem-grid">
-                    <div class="problem-card">
-                        <div class="problem-icon">💸</div>
-                        <h3>Expensive hardware</h3>
-                        <p>$50k+ robots, constant repairs, safety equipment</p>
-                    </div>
-                    <div class="problem-card">
-                        <div class="problem-icon">🐌</div>
-                        <h3>Painfully slow</h3>
-                        <p>Manual resets, physical constraints, safety protocols</p>
-                    </div>
-                    <div class="problem-card">
-                        <div class="problem-icon">🔧</div>
-                        <h3>Setup hell</h3>
-                        <p>ROS, CUDA, dependencies, OS compatibility issues</p>
-                    </div>
-                    <div class="problem-card">
-                        <div class="problem-icon">🚫</div>
-                        <h3>Can't share</h3>
-                        <p>Impossible to replicate environments or results</p>
-                    </div>
-                </div>
-                <div class="comparison">
-                    <p class="comparison-text">
-                        Meanwhile, developers deploy apps on <strong>Vercel</strong> in seconds.<br>
-                        ML engineers train models on <strong>Hugging Face</strong> with one click.<br>
-                        Why is robotics still stuck in 2010?
-                    </p>
-                </div>
-            </div>
-        </section> -->
-
-        <!-- Load Features Section -->
+        <!-- Dynamic Content Containers -->
         <div id="featuresContainer"></div>
-        
-        <!-- Load About Section -->
         <div id="aboutContainer"></div>
-        
-        <!-- Load Pricing Section -->
         <div id="pricingContainer"></div>
     </div>
 
-    <!-- Dashboard will be loaded dynamically -->
+    <!-- Dashboard Container -->
     <div id="dashboardContainer"></div>
 
-    <!-- Load Modals -->
+    <!-- Modals Container -->
     <div id="modalsContainer"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>Product</h4>
+                    <a href="#features">Features</a>
+                    <a href="#pricing">Pricing</a>
+                    <a href="#" onclick="showDashboard()">Demo</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <a href="#about">About</a>
+                    <a href="mailto:team@robospace.app">Contact</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 RoboSpace. All rights reserved.</p>
+                <p>Built with ❤️ for roboticists</p>
+            </div>
+        </div>
+    </footer>
 
     <!-- Firebase Scripts -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -125,41 +97,5 @@
     <script src="js/auth.js"></script>
     <script src="js/dashboard.js"></script>
     <script src="js/app.js"></script>
-    <!-- Footer Section -->
-    <footer class="footer-minimal">
-        <div class="footer-container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>Product</h4>
-                    <a href="#features">Features</a>
-                    <a href="#pricing">Pricing</a>
-                    <a href="#" onclick="showDashboard()">Demo</a>
-                </div>
-                <div class="footer-section">
-                    <h4>Company</h4>
-                    <a href="#about">About</a>
-                    <a href="mailto:team@robospace.app">Contact</a>
-                    <!-- <a href="">Blog</a> -->
-                </div>
-                <!-- <div class="footer-section">
-                    <h4>Resources</h4>
-                    <a href="">Documentation</a>
-                    <a href="">API Reference</a>
-                    <a href="">Status</a>
-                </div> -->
-                <!-- <div class="footer-section">
-                    <h4>Legal</h4>
-                    <a href="">Privacy</a>
-                    <a href="">Terms</a>
-                    <a href="">Security</a>
-                </div> -->
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; <script>document.write(new Date().getFullYear())</script> RoboSpace. All rights reserved.</p>
-                <p class="footer-meta">Built with ❤️ for roboticists</p>
-            </div>
-        </div>
-    </footer>
-
 </body>
 </html>
